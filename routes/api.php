@@ -48,5 +48,8 @@ $api->version('v1', [
         // 详情
         $api->get('companies/{company}', 'CompaniesController@show')
             ->name('api.companies.show');
+        // 图片上传
+        $api->post('images/upload', 'ImageUploadHandlerController@upload')
+            ->name('api.images.upload');
     });
 });

@@ -7,6 +7,12 @@ use App\Transformers\CompanyTransformer;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\CompanyRequest;
 
+/**
+ * 公司管理
+ *
+ * Class CompaniesController
+ * @package App\Http\Controllers\Api
+ */
 class CompaniesController extends Controller
 {
     public function store(CompanyRequest $request, Company $company)
