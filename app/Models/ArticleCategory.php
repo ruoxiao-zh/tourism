@@ -12,4 +12,9 @@ class ArticleCategory extends Model
         'name',
         'type'
     ];
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'cate_id', 'id');
+    }
 }

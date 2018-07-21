@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\ArticleRequest;
 use App\Models\Article;
+use App\Models\ArticleCategory;
 use App\Transformers\ArticleTransformer;
 use Illuminate\Http\Request;
 
@@ -45,6 +46,37 @@ class ArticlesController extends Controller
 
     public function show(Article $article)
     {
+        return $this->response->item($article, new ArticleTransformer());
+    }
+
+    public function categoryArticles(ArticleCategory $articleCategory, Request $request)
+    {
+        $articles = $articleCategory->articles()->paginate(15);
+
+        return $this->response->paginator($articles, new ArticleTransformer());
+    }
+
+    public function changeTop(Article $article)
+    {
+        if ($article->is_top) {
+            $article->is_top = 0;
+        } else {
+            $article->is_top = 1;
+        }
+        $article->save();
+
+        return $this->response->item($article, new ArticleTransformer());
+    }
+
+    public function changeIndex(Article $article)
+    {
+        if ($article->is_index) {
+            $article->is_index = 0;
+        } else {
+            $article->is_index = 1;
+        }
+        $article->save();
+
         return $this->response->item($article, new ArticleTransformer());
     }
 }

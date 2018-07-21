@@ -71,6 +71,7 @@ $api->version('v1', [
         /**
          * 文章管理
          */
+        // 添加
         $api->post('articles', 'ArticlesController@store')
             ->name('api.articles.store');
         // 更新
@@ -85,6 +86,15 @@ $api->version('v1', [
         // 详情
         $api->get('articles/{article}', 'ArticlesController@show')
             ->name('api.articles.show');
+        // 获取指定文章分类下的文章
+        $api->get('article-categories/{articleCategory}/articles', 'ArticlesController@categoryArticles')
+            ->name('api.article-categories.articles');
+        // 置顶与取消置顶
+        $api->get('articles/change-top/{article}', 'ArticlesController@changeTop')
+            ->name('api.articles.change.top');
+        // 推荐首页与取消推荐首页
+        $api->get('articles/change-index/{article}', 'ArticlesController@changeIndex')
+            ->name('api.articles.change.index');
 
         /**
          * 公共接口
