@@ -97,6 +97,25 @@ $api->version('v1', [
             ->name('api.articles.change.index');
 
         /**
+         * 客服管理
+         */
+        // 添加
+        $api->post('customer-services', 'CustomerServicesController@store')
+            ->name('api.customer-services.store');
+        // 更新
+        $api->patch('customer-services/{customerService}', 'CustomerServicesController@update')
+            ->name('api.customer-services.update');
+        // 删除
+        $api->delete('customer-services/{customerService}', 'CustomerServicesController@destroy')
+            ->name('api.customer-services.destroy');
+        // 列表
+        $api->get('customer-services', 'CustomerServicesController@index')
+            ->name('api.customer-services.index');
+        // 详情
+        $api->get('customer-services/{customerService}', 'CustomerServicesController@show')
+            ->name('api.customer-services.show');
+
+        /**
          * 公共接口
          */
         // 图片上传

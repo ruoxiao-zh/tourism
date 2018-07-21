@@ -30,6 +30,7 @@ class CompaniesController extends Controller
         // $this->authorize('update', $topic);
 
         $company->update($request->all());
+
         return $this->response->item($company, new CompanyTransformer());
     }
 
@@ -39,6 +40,7 @@ class CompaniesController extends Controller
         // $this->authorize('update', $topic);
 
         $company->delete();
+
         return $this->response->noContent();
     }
 

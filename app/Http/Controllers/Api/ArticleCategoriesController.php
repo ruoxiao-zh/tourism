@@ -7,6 +7,12 @@ use App\Models\ArticleCategory;
 use App\Transformers\ArticleCategoryTransformer;
 use Illuminate\Http\Request;
 
+/**
+ * 文章分类管理
+ *
+ * Class ArticleCategoriesController
+ * @package App\Http\Controllers\Api
+ */
 class ArticleCategoriesController extends Controller
 {
     public function store(ArticleCategoryRequest $request, ArticleCategory $articleCategory)
