@@ -12,7 +12,7 @@ class ImageUploadHandlerRequest extends BaseRequest
             'images'   => 'mimes:jpg,jpeg,bmp,png,gif|dimensions:min_width=200,min_height=200',
             'filename' => [
                 'required',
-                Rule::in(['companies']),
+                Rule::in(['companies', 'articles', 'rooms', 'attractions', 'services']),
             ],
         ];
     }
@@ -23,7 +23,7 @@ class ImageUploadHandlerRequest extends BaseRequest
             'images.mimes'      => '图片必须是 jpg, jpeg, bmp, png, gif 格式',
             'images.dimensions' => '图片的清晰度不够，宽和高需要 200px 以上',
             'filename.required' => '图片上传文件目录不能为空',
-            'filename.in'       => '图片上传文件目录只能为 [companies, goods] 数组中的任一值',
+            'filename.in'       => '图片上传文件目录只能是 [companies, goods] 数组中的任一值',
         ];
     }
 }

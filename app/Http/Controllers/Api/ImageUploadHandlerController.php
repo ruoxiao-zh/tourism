@@ -13,6 +13,7 @@ use App\Http\Requests\Api\ImageUploadHandlerRequest;
  */
 class ImageUploadHandlerController extends Controller
 {
+    // 允许上传图片类型
     protected $allowed_ext = ['png', 'jpg', 'gif', 'jpeg'];
 
     public function save($file, $folder, $max_width = false)
@@ -80,6 +81,11 @@ class ImageUploadHandlerController extends Controller
         $image->save();
     }
 
+    /**
+     * 图片上传
+     *
+     * @param ImageUploadHandlerRequest $request
+     */
     public function upload(ImageUploadHandlerRequest $request)
     {
         return $this->save($request->images, $request->filename, 1024);
