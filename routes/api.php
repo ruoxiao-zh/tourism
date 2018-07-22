@@ -133,6 +133,9 @@ $api->version('v1', [
         // 详情
         $api->get('check-coders/{checkCoder}', 'CheckCodersController@show')
             ->name('api.check-coders.show');
+        // 禁用与启用
+        $api->get('check-coders/change-status/{checkCoder}', 'CheckCodersController@changeStatus')
+            ->name('api.check-coders.change.status');
 
         /**
          * 酒店分类管理

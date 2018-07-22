@@ -50,4 +50,16 @@ class CheckCodersController extends Controller
     {
         return $this->response->item($checkCoder, new CheckCoderTransformer());
     }
+
+    public function changeStatus(CheckCoder $checkCoder)
+    {
+        if ($checkCoder->status) {
+            $checkCoder->status = 0;
+        } else {
+            $checkCoder->status = 1;
+        }
+        $checkCoder->save();
+
+        return $this->response->item($checkCoder, new CheckCoderTransformer());
+    }
 }
