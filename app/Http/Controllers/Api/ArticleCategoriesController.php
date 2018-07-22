@@ -44,7 +44,7 @@ class ArticleCategoriesController extends Controller
     public function index(Request $request, ArticleCategory $articleCategory)
     {
         $query = $articleCategory->query();
-        $articleCategories = $query->where('type', 'sports')->paginate(15);
+        $articleCategories = $query->where('type', $request->type)->paginate(15);
 
         return $this->response->paginator($articleCategories, new ArticleCategoryTransformer());
     }

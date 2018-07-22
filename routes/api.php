@@ -116,6 +116,25 @@ $api->version('v1', [
             ->name('api.customer-services.show');
 
         /**
+         * 核销员管理
+         */
+        // 添加
+        $api->post('check-coders', 'CheckCodersController@store')
+            ->name('api.check-coders.store');
+        // 更新
+        $api->patch('check-coders/{checkCoder}', 'CheckCodersController@update')
+            ->name('api.check-coders.update');
+        // 删除
+        $api->delete('check-coders/{checkCoder}', 'CheckCodersController@destroy')
+            ->name('api.check-coders.destroy');
+        // 列表
+        $api->get('check-coders', 'CheckCodersController@index')
+            ->name('api.check-coders.index');
+        // 详情
+        $api->get('check-coders/{checkCoder}', 'CheckCodersController@show')
+            ->name('api.check-coders.show');
+
+        /**
          * 公共接口
          */
         // 图片上传
