@@ -157,6 +157,25 @@ $api->version('v1', [
             ->name('api.hotel-categories.show');
 
         /**
+         * 酒店管理
+         */
+        // 添加
+        $api->post('hotels', 'HotelsController@store')
+            ->name('api.hotels.store');
+        // 更新
+        $api->patch('hotels/{hotel}', 'HotelsController@update')
+            ->name('api.hotels.update');
+        // 删除
+        $api->delete('hotels/{hotel}', 'HotelsController@destroy')
+            ->name('api.hotels.destroy');
+        // 列表
+        $api->get('hotels', 'HotelsController@index')
+            ->name('api.hotels.index');
+        // 详情
+        $api->get('hotels/{hotel}', 'HotelsController@show')
+            ->name('api.hotels.show');
+
+        /**
          * 公共接口
          */
         // 图片上传

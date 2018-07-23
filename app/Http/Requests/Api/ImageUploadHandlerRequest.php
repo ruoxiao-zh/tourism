@@ -12,7 +12,7 @@ class ImageUploadHandlerRequest extends BaseRequest
             'images'   => 'mimes:jpg,jpeg,bmp,png,gif|dimensions:min_width=200,min_height=200',
             'filename' => [
                 'required',
-                Rule::in(['companies', 'articles', 'rooms', 'attractions', 'services']),
+                Rule::in(['companies', 'articles', 'hotels', 'rooms', 'attractions', 'services']),
             ],
         ];
     }
