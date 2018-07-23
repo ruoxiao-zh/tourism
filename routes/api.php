@@ -176,6 +176,44 @@ $api->version('v1', [
             ->name('api.hotels.show');
 
         /**
+         * 房间类型管理
+         */
+        // 添加
+        $api->post('hotel-room-types', 'HotelRoomTypesController@store')
+            ->name('api.hotel-room-types.store');
+        // 更新
+        $api->patch('hotel-room-types/{hotelRoomType}', 'HotelRoomTypesController@update')
+            ->name('api.hotel-room-types.update');
+        // 删除
+        $api->delete('hotel-room-types/{hotelRoomType}', 'HotelRoomTypesController@destroy')
+            ->name('api.hotel-room-types.destroy');
+        // 列表
+        $api->get('hotel-room-types', 'HotelRoomTypesController@index')
+            ->name('api.hotel-room-types.index');
+        // 详情
+        $api->get('hotel-room-types/{hotelRoomType}', 'HotelRoomTypesController@show')
+            ->name('api.hotel-room-types.show');
+
+        /**
+         * 房间管理
+         */
+        // 添加
+        $api->post('hotel-rooms', 'HotelRoomsController@store')
+            ->name('api.hotel-rooms.store');
+        // 更新
+        $api->patch('hotel-rooms/{hotelRoom}', 'HotelRoomsController@update')
+            ->name('api.hotels.update');
+        // 删除
+        $api->delete('hotel-rooms/{hotelRoom}', 'HotelRoomsController@destroy')
+            ->name('api.hotel-rooms.destroy');
+        // 列表
+        $api->get('hotel-rooms', 'HotelRoomsController@index')
+            ->name('api.hotel-rooms.index');
+        // 详情
+        $api->get('hotel-rooms/{hotelRoom}', 'HotelRoomsController@show')
+            ->name('api.hotel-rooms.show');
+
+        /**
          * 公共接口
          */
         // 图片上传
