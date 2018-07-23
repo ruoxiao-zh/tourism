@@ -7,6 +7,12 @@ use App\Models\HotelRoomType;
 use App\Transformers\HotelRoomTypeTransformer;
 use Illuminate\Http\Request;
 
+/**
+ * 房间类型管理
+ *
+ * Class HotelRoomTypesController
+ * @package App\Http\Controllers\Api
+ */
 class HotelRoomTypesController extends Controller
 {
     public function store(HotelRoomTypeRequest $request, HotelRoomType $hotelRoomType)

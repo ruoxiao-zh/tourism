@@ -29,6 +29,7 @@ class ArticleCategoriesController extends Controller
         // todo...
         // $this->authorize('update', $topic);
         $articleCategory->update($request->all());
+        
         return $this->response->item($articleCategory, new ArticleCategoryTransformer());
     }
 
@@ -38,6 +39,7 @@ class ArticleCategoriesController extends Controller
         // $this->authorize('update', $topic);
 
         $articleCategory->delete();
+
         return $this->response->noContent();
     }
 
