@@ -221,16 +221,35 @@ $api->version('v1', [
             ->name('api.travel-categories.store');
         // 更新
         $api->patch('travel-categories/{travelCategory}', 'TravelCategoriesController@update')
-            ->name('api.hotel-categories.update');
+            ->name('api.travel-categories.update');
         // 删除
         $api->delete('travel-categories/{travelCategory}', 'TravelCategoriesController@destroy')
-            ->name('api.hotel-categories.destroy');
+            ->name('api.travel-categories.destroy');
         // 列表
         $api->get('travel-categories', 'TravelCategoriesController@index')
             ->name('api.travel-categories.index');
         // 详情
         $api->get('travel-categories/{travelCategory}', 'TravelCategoriesController@show')
             ->name('api.travel-categories.show');
+
+        /**
+         * 旅游视频管理
+         */
+        // 添加
+        $api->post('travel-videos', 'TravelVideosController@store')
+            ->name('api.travel-videos.store');
+        // 更新
+        $api->patch('travel-videos/{travelVideo}', 'TravelVideosController@update')
+            ->name('api.hotel-videos.update');
+        // 删除
+        $api->delete('travel-videos/{travelVideo}', 'TravelVideosController@destroy')
+            ->name('api.travel-videos.destroy');
+        // 列表
+        $api->get('travel-videos', 'TravelVideosController@index')
+            ->name('api.travel-videos.index');
+        // 详情
+        $api->get('travel-videos/{travelVideo}', 'TravelVideosController@show')
+            ->name('api.travel-videos.show');
 
         /**
          * 公共接口
