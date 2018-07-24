@@ -37,7 +37,7 @@ class HotelRoomsController extends Controller
         \DB::transaction(function () use ($request, $hotelRoom, $hotelRoomImage) {
             $hotelRoom->update($request->all());
 
-            $hotelRoomImage->where('hotel_id', $hotelRoom->id)->delete();
+            $hotelRoomImage->where('hotel_room_id', $hotelRoom->id)->delete();
             $hotel_images = json_decode($request->images, true);
             foreach ($hotel_images as $key => $value) {
                 $hotelRoomImage->insert([
@@ -52,12 +52,13 @@ class HotelRoomsController extends Controller
         return $this->response->item($hotelRoom, new HotelRoomTransformer());
     }
 
-    public function destroy(HotelRoom $hotelRoom)
+    public function destroy(HotelRoom $hotelRoom, HotelRoomImage $hotelRoomImage)
     {
         // todo...
         // $this->authorize('update', $topic);
 
         $hotelRoom->delete();
+        $hotelRoomImage->where('hotel_room_id', $hotelRoom->id)->delete();
 
         return $this->response->noContent();
     }

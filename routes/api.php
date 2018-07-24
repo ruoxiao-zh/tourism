@@ -214,6 +214,25 @@ $api->version('v1', [
             ->name('api.hotel-rooms.show');
 
         /**
+         * 旅游分类管理
+         */
+        // 添加
+        $api->post('travel-categories', 'TravelCategoriesController@store')
+            ->name('api.travel-categories.store');
+        // 更新
+        $api->patch('travel-categories/{travelCategory}', 'TravelCategoriesController@update')
+            ->name('api.hotel-categories.update');
+        // 删除
+        $api->delete('travel-categories/{travelCategory}', 'TravelCategoriesController@destroy')
+            ->name('api.hotel-categories.destroy');
+        // 列表
+        $api->get('travel-categories', 'TravelCategoriesController@index')
+            ->name('api.travel-categories.index');
+        // 详情
+        $api->get('travel-categories/{travelCategory}', 'TravelCategoriesController@show')
+            ->name('api.travel-categories.show');
+
+        /**
          * 公共接口
          */
         // 图片上传
