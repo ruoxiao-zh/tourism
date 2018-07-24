@@ -250,6 +250,28 @@ $api->version('v1', [
         // 详情
         $api->get('travel-videos/{travelVideo}', 'TravelVideosController@show')
             ->name('api.travel-videos.show');
+        // 详情
+        $api->get('travel-videos/{travelVideo}', 'TravelVideosController@show')
+            ->name('api.travel-videos.show');
+
+        /**
+         * 旅游线路管理
+         */
+        // 添加
+        $api->post('travel-lines', 'TravelLinesController@store')
+            ->name('api.travel-lines.store');
+        // 更新
+        $api->patch('travel-lines/{travelLine}', 'TravelLinesController@update')
+            ->name('api.hotel-lines.update');
+        // 删除
+        $api->delete('travel-lines/{travelLine}', 'TravelLinesController@destroy')
+            ->name('api.travel-lines.destroy');
+        // 列表
+        $api->get('travel-lines', 'TravelLinesController@index')
+            ->name('api.travel-lines.index');
+        // 详情
+        $api->get('travel-lines/change-status/{travelLine}', 'TravelLinesController@changeStatus')
+            ->name('api.travel-lines.change.status');
 
         /**
          * 公共接口
