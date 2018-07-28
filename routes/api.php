@@ -293,6 +293,25 @@ $api->version('v1', [
             ->name('api.take-tickets-types.show');
 
         /**
+         * 景区管理
+         */
+        // 添加
+        $api->post('attractions', 'AttractionsController@store')
+            ->name('api.attractions.store');
+        // 更新
+        $api->patch('attractions/{attraction}', 'AttractionsController@update')
+            ->name('api.attractions.update');
+        // 删除
+        $api->delete('attractions/{attraction}', 'AttractionsController@destroy')
+            ->name('api.attractions.destroy');
+        // 列表
+        $api->get('attractions', 'AttractionsController@index')
+            ->name('api.attractions.index');
+        // 详情
+        $api->get('attractions/{attraction}', 'AttractionsController@show')
+            ->name('api.attractions.show');
+
+        /**
          * 用户相关
          */
         // 图片验证码
@@ -309,7 +328,7 @@ $api->version('v1', [
             ->name('api.authorizations.destroy');
 
         // 需要 token 验证的接口
-        $api->group(['middleware' => 'api.auth'], function($api) {
+        $api->group(['middleware' => 'api.auth'], function ($api) {
             // 当前登录用户信息
             $api->get('user', 'UsersController@me')
                 ->name('api.user.show');
