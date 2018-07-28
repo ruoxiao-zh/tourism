@@ -274,6 +274,25 @@ $api->version('v1', [
             ->name('api.travel-lines.change.status');
 
         /**
+         * 景点取票方式管理
+         */
+        // 添加
+        $api->post('take-tickets-types', 'AttractionsTakeTicketsTypesController@store')
+            ->name('api.take-tickets-types.store');
+        // 更新
+        $api->patch('take-tickets-types/{attractionsTakeTicketsType}', 'AttractionsTakeTicketsTypesController@update')
+            ->name('api.take-tickets-types.update');
+        // 删除
+        $api->delete('take-tickets-types/{attractionsTakeTicketsType}', 'AttractionsTakeTicketsTypesController@destroy')
+            ->name('api.take-tickets-types.destroy');
+        // 列表
+        $api->get('take-tickets-types', 'AttractionsTakeTicketsTypesController@index')
+            ->name('api.take-tickets-types.index');
+        // 详情
+        $api->get('take-tickets-types/{attractionsTakeTicketsType}', 'AttractionsTakeTicketsTypesController@show')
+            ->name('api.take-tickets-types.show');
+
+        /**
          * 用户相关
          */
         // 图片验证码

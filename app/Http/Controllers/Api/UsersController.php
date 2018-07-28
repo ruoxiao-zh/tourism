@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Transformers\UserTransformer;
 use App\Http\Requests\Api\UserRequest;
+use Spatie\Permission\Models\Permission;
 
 class UsersController extends Controller
 {
@@ -25,6 +26,7 @@ class UsersController extends Controller
             'name'     => $request->name,
             'password' => bcrypt($request->password),
             'email'    => $request->email,
+            'is_admin' => 1,
         ]);
 
         return $this->response->item($user, new UserTransformer())
@@ -51,6 +53,7 @@ class UsersController extends Controller
             'name'     => $request->name,
             'password' => bcrypt($request->password),
             'email'    => $request->email,
+            'is_admin' => 1,
         ]);
 
         return $this->response->item($user, new UserTransformer())
