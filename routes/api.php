@@ -274,6 +274,22 @@ $api->version('v1', [
             ->name('api.travel-lines.change.status');
 
         /**
+         * 用户相关
+         */
+        // 图片验证码
+        $api->get('captchas', 'CaptchasController@store')
+            ->name('api.captchas.store');
+        // 登录
+        $api->post('authorizations', 'AuthorizationsController@store')
+            ->name('api.authorizations.store');
+        // 刷新 token
+        $api->put('authorizations/current', 'AuthorizationsController@update')
+            ->name('api.authorizations.update');
+        // 删除 token
+        $api->delete('authorizations/current', 'AuthorizationsController@destroy')
+            ->name('api.authorizations.destroy');
+
+        /**
          * 公共接口
          */
         // 图片上传
