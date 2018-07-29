@@ -312,6 +312,25 @@ $api->version('v1', [
             ->name('api.attractions.show');
 
         /**
+         * 门票类型管理
+         */
+        // 添加
+        $api->post('ticket-types', 'TicketTypesController@store')
+            ->name('api.ticket-types.store');
+        // 更新
+        $api->patch('ticket-types/{ticketType}', 'TicketTypesController@update')
+            ->name('api.ticket-types.update');
+        // 删除
+        $api->delete('ticket-types/{ticketType}', 'TicketTypesController@destroy')
+            ->name('api.ticket-types.destroy');
+        // 列表
+        $api->get('ticket-types', 'TicketTypesController@index')
+            ->name('api.ticket-types.index');
+        // 详情
+        $api->get('ticket-types/{ticketType}', 'TicketTypesController@show')
+            ->name('api.ticket-types.show');
+
+        /**
          * 用户相关
          */
         // 图片验证码
