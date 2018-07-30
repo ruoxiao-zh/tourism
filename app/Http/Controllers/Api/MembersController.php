@@ -7,6 +7,12 @@ use App\Models\Member;
 use App\Transformers\MembersTransformer;
 use Illuminate\Http\Request;
 
+/**
+ * 会员管理
+ *
+ * Class MembersController
+ * @package App\Http\Controllers\Api
+ */
 class MembersController extends Controller
 {
     public function store(MembersRequest $request, Member $member)

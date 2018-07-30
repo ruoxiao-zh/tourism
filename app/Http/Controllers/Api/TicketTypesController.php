@@ -7,6 +7,12 @@ use App\Models\TicketType;
 use App\Transformers\TicketTypeTransformer;
 use Illuminate\Http\Request;
 
+/**
+ * 取票方式管理
+ *
+ * Class TicketTypesController
+ * @package App\Http\Controllers\Api
+ */
 class TicketTypesController extends Controller
 {
     public function store(TicketTypeRequest $request, TicketType $ticketType)

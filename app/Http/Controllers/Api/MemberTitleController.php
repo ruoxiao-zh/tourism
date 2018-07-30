@@ -7,6 +7,12 @@ use App\Models\MemberTitle;
 use App\Transformers\MemberTitleTransformer;
 use Illuminate\Http\Request;
 
+/**
+ * 会员头衔管理
+ *
+ * Class MemberTitleController
+ * @package App\Http\Controllers\Api
+ */
 class MemberTitleController extends Controller
 {
     public function store(MemberTitleRequest $request, MemberTitle $memberTitle)

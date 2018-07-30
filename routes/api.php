@@ -391,6 +391,25 @@ $api->version('v1', [
             ->name('api.members.change.status');
 
         /**
+         * 轮播图管理
+         */
+        // 添加
+        $api->post('slide-shows', 'SlideShowsController@store')
+            ->name('api.slide-shows.store');
+        // 更新
+        $api->patch('slide-shows/{slideShow}', 'SlideShowsController@update')
+            ->name('api.slide-shows.update');
+        // 删除
+        $api->delete('slide-shows/{slideShow}', 'SlideShowsController@destroy')
+            ->name('api.slide-shows.destroy');
+        // 列表
+        $api->get('slide-shows', 'SlideShowsController@index')
+            ->name('api.slide-shows.index');
+        // 详情
+        $api->get('slide-shows/{slideShow}', 'SlideShowsController@show')
+            ->name('api.slide-shows.show');
+
+        /**
          * 用户相关
          */
         // 图片验证码
