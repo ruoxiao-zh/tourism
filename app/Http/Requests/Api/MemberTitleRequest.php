@@ -9,7 +9,7 @@ class MemberTitleRequest extends BaseRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'name' => 'required|string|max:100|unique:ticket_types',
+                    'name' => 'required|string|max:100|unique:member_title',
                 ];
                 break;
             case 'PATCH':

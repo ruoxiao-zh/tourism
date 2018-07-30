@@ -369,6 +369,25 @@ $api->version('v1', [
             ->name('api.member-title.show');
 
         /**
+         * 会员管理
+         */
+        // 添加
+        $api->post('members', 'MembersController@store')
+            ->name('api.members.store');
+        // 更新
+        $api->patch('members/{member}', 'MembersController@update')
+            ->name('api.members.update');
+        // 删除
+        $api->delete('members/{member}', 'MembersController@destroy')
+            ->name('api.members.destroy');
+        // 列表
+        $api->get('members', 'MembersController@index')
+            ->name('api.members.index');
+        // 详情
+        $api->get('members/{member}', 'MembersController@show')
+            ->name('api.members.show');
+
+        /**
          * 用户相关
          */
         // 图片验证码
