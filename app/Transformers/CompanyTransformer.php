@@ -12,6 +12,7 @@ class CompanyTransformer extends TransformerAbstract
         return [
             'id'         => $company->id,
             'name'       => $company->name,
+            'logo'       => $company->logo,
             'phone'      => $company->phone,
             'address'    => $company->address,
             'introduce'  => $company->introduce,

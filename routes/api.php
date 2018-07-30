@@ -350,6 +350,25 @@ $api->version('v1', [
             ->name('api.tickets.show');
 
         /**
+         * 会员等级头衔管理
+         */
+        // 添加
+        $api->post('member-title', 'MemberTitleController@store')
+            ->name('api.member-title.store');
+        // 更新
+        $api->patch('member-title/{memberTitle}', 'MemberTitleController@update')
+            ->name('api.member-title.update');
+        // 删除
+        $api->delete('member-title/{memberTitle}', 'MemberTitleController@destroy')
+            ->name('api.member-title.destroy');
+        // 列表
+        $api->get('member-title', 'MemberTitleController@index')
+            ->name('api.member-title.index');
+        // 详情
+        $api->get('member-title/{memberTitle}', 'MemberTitleController@show')
+            ->name('api.member-title.show');
+
+        /**
          * 用户相关
          */
         // 图片验证码
