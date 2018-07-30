@@ -50,4 +50,16 @@ class MembersController extends Controller
     {
         return $this->response->item($member, new MembersTransformer());
     }
+
+    public function changeStatus(Member $member)
+    {
+        if ($member->is_forbid) {
+            $member->is_forbid = 0;
+        } else {
+            $member->is_forbid = 1;
+        }
+        $member->save();
+
+        return $this->response->item($member, new MembersTransformer());
+    }
 }

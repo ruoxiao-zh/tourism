@@ -386,6 +386,9 @@ $api->version('v1', [
         // 详情
         $api->get('members/{member}', 'MembersController@show')
             ->name('api.members.show');
+        // 会员启用与禁用
+        $api->get('members/change-status/{member}', 'MembersController@changeStatus')
+            ->name('api.members.change.status');
 
         /**
          * 用户相关
