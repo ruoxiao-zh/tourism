@@ -270,6 +270,9 @@ $api->version('v1', [
         $api->get('travel-lines', 'TravelLinesController@index')
             ->name('api.travel-lines.index');
         // 详情
+        $api->get('travel-lines/{travelLine}', 'TravelLinesController@show')
+            ->name('api.travel-lines.show');
+        // 上架与下架
         $api->get('travel-lines/change-status/{travelLine}', 'TravelLinesController@changeStatus')
             ->name('api.travel-lines.change.status');
 
