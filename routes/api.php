@@ -413,6 +413,16 @@ $api->version('v1', [
             ->name('api.slide-shows.show');
 
         /**
+         * 微信相关
+         */
+        // 小程序登录 - 获取 openid
+        $api->post('weapp/authorizations', 'WeChatHandlerController@weappStore')
+            ->name('api.weapp.authorizations.store');
+        // 小程序登录 - 获取 token
+        $api->post('weapp/me', 'WeChatHandlerController@me')
+            ->name('api.weapp.authorizations.me');
+
+        /**
          * 用户相关
          */
         // 图片验证码
