@@ -449,6 +449,25 @@ $api->version('v1', [
             // 用户信息修改
             $api->put('users', 'UsersController@update')
                 ->name('api.users.update');
+
+            /**
+             * 购物车管理
+             */
+            // 添加
+            $api->post('cart', 'CartController@store')
+                ->name('api.cart.store');
+            // 更新
+            $api->patch('cart/{slideShow}', 'CartController@update')
+                ->name('api.cart.update');
+            // 删除
+            $api->delete('cart/{cart}', 'CartController@destroy')
+                ->name('api.cart.destroy');
+            // 列表
+            $api->get('cart', 'CartController@index')
+                ->name('api.cart.index');
+            // 详情
+            $api->get('cart/{cart}', 'CartController@show')
+                ->name('api.cart.show');
         });
 
         /**
