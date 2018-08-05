@@ -94,6 +94,7 @@ class PaymentController extends Controller
         $order->update([
             'refund_no'     => $refundNo,
             'refund_status' => 'success',
+            'order_status'  => 5,
         ]);
 
         return $this->response->array(['refund_status' => 'success'])
