@@ -499,7 +499,7 @@ $api->version('v1', [
                 ->name('api.pay.store');
         });
         // 微信支付回调
-        Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')
+        $api->post('payment/wechat/notify', 'PaymentController@wechatNotify')
             ->name('payment.wechat.notify');
 
         /**
