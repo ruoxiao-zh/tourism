@@ -106,6 +106,13 @@ class OrdersController extends Controller
             ->setStatusCode(201);
     }
 
+    /**
+     * 申请退款
+     *
+     * @param ApplyRefundRequest $request
+     *
+     * @return Order|\Illuminate\Database\Eloquent\Model|null|object
+     */
     public function applyRefund(ApplyRefundRequest $request)
     {
         // 校验订单是否属于当前用户
@@ -133,5 +140,18 @@ class OrdersController extends Controller
         ]);
 
         return $order;
+    }
+
+    public function show(Order $order)
+    {
+        return $this->response->item($order, new OrderTransformer());
+    }
+
+    public function index(Request $request, Order $order)
+    {
+        $query = $order->query();
+        $orders = $query->paginate(15);
+
+        return $this->response->paginator($orders, new OrderTransformer());
     }
 }

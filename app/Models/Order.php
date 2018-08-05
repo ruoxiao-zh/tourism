@@ -49,7 +49,51 @@ class Order extends Model
 
     public function items()
     {
-        return $this->hasMany(OrderItem::class, 'order_id', 'id');
+        $order_items = OrderItem::where('order_id', $this->id)->get();
+        if ($order_items) {
+            foreach ($order_items as $key => $item) {
+                switch ($item->type) {
+                    case 'travel':
+                        // 图片
+                        $images = TravelLineImage::where('travel_line_id', $item->product_id)->first();
+                        ($order_items[$key])->images = $images->image;
+                        // 名称
+                        $travel = TravelLine::find($item->product_id);
+                        ($order_items[$key])->name = $travel->name;
+                        // 日期
+                        ($order_items[$key])->date = json_decode($item->date, true);
+                        break;
+                    case 'ticket':
+                        // 图片
+                        $ticket = Ticket::where('id', $item->product_id)->first();
+                        $attraction = Attraction::find($ticket->attraction_id);
+                        ($order_items[$key])->images = $attraction->image;
+                        // 名称
+                        ($order_items[$key])->name = $attraction->name;
+                        // 门票类型
+                        $ticket_type = TicketType::find($ticket->ticket_type_id);
+                        ($order_items[$key])->ticket_type = $ticket_type->name;
+                        // 日期
+                        ($order_items[$key])->date = json_decode($item->date, true);
+                        break;
+                    case 'hotel':
+                        // 图片
+                        $images = HotelRoomImage::where('hotel_room_id', $item->product_id)->first();
+                        ($order_items[$key])->images = $images->image;
+                        // 名称
+                        $hotel_room = HotelRoom::find($item->product_id);
+                        $hotel = Hotel::where('id', $hotel_room->hotel_id)->first();
+                        $hotel_room_type = HotelRoomType::where('id', $hotel_room->hotel_room_type_id)->first();
+
+                        ($order_items[$key])->name = $hotel->name . $hotel_room_type->type;
+                        // 日期
+                        ($order_items[$key])->date = json_decode($item->date, true);
+                        break;
+                }
+            }
+        }
+
+        return $order_items;
     }
 
     /**
@@ -110,6 +154,18 @@ class Order extends Model
                 return '申请退款';
                 break;
             case 5:
+                return '退款完成';
+                break;
+        }
+    }
+
+    public function refundStatus()
+    {
+        switch ($this->refund_status) {
+            case 'applying':
+                return '申请退款';
+                break;
+            case 'success':
                 return '退款完成';
                 break;
         }
