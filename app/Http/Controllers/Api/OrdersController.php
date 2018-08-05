@@ -120,7 +120,7 @@ class OrdersController extends Controller
         }
         // 订单状态 (0: 未支付 1:已支付 2: 已发货 3: 确认收货, 完成 4: 申请退款 5: 退款完成)
         // 判断订单退款状态是否正确
-        if ($order->refund_status !== 1 || $order->order_status == 5) {
+        if (!$order->refund_status) {
             throw new \Dingo\Api\Exception\StoreResourceFailedException('该订单已经申请过退款，请勿重复申请');
         }
         // 将用户输入的退款理由放到订单的 extra 字段中
