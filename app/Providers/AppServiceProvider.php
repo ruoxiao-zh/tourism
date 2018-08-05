@@ -34,6 +34,8 @@ class AppServiceProvider extends ServiceProvider
         // 微信支付
         $this->app->singleton('wechat_pay', function () {
             $config = config('pay.wechat');
+            // 微信支付回调地址
+            // $config['notify_url'] = 'https://www.fljjcm.com/api/payment/wechat/notify';
             if (app()->environment() !== 'production') {
                 $config['log']['level'] = Logger::DEBUG;
             } else {

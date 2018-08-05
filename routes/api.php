@@ -494,7 +494,13 @@ $api->version('v1', [
             /**
              * 支付管理
              */
+            // 添加, 购物车添加
+            $api->post('pay', 'PaymentController@payByWechat')
+                ->name('api.pay.store');
         });
+        // 微信支付回调
+        Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')
+            ->name('payment.wechat.notify');
 
         /**
          * 公共接口
