@@ -20,6 +20,7 @@ class Order extends Model
         'paid_at',
         'payment_no',
         'refund_status',
+        'refund_reason',
         'refund_no'
     ];
 

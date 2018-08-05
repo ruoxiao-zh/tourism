@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\ApplyRefundRequest;
 use App\Http\Requests\Api\CartOrderRequest;
 use App\Http\Requests\Api\OrderRequest;
 use App\Models\Cart;
@@ -64,6 +65,15 @@ class OrdersController extends Controller
             ->setStatusCode(201);
     }
 
+    /**
+     * 直接下单
+     *
+     * @param OrderRequest $request
+     * @param Order        $order
+     * @param OrderItem    $orderItem
+     *
+     * @return \Dingo\Api\Http\Response
+     */
     public function store(OrderRequest $request, Order $order, OrderItem $orderItem)
     {
         \DB::transaction(function () use ($request, $order, $orderItem) {
@@ -94,5 +104,33 @@ class OrdersController extends Controller
 
         return $this->response->item($order, new OrderTransformer())
             ->setStatusCode(201);
+    }
+
+    public function applyRefund(ApplyRefundRequest $request)
+    {
+        // 校验订单是否属于当前用户
+        $order = Order::where(['user_id' => $this->user()->id, 'id' => $request->order_id])->first();
+        if (!$order) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('订单不存在');
+
+        }
+        // 判断订单是否已付款
+        if (!$order->paid_at) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('该订单未支付，不可退款');
+        }
+        // 订单状态 (0: 未支付 1:已支付 2: 已发货 3: 确认收货, 完成 4: 申请退款 5: 退款完成)
+        // 判断订单退款状态是否正确
+        if ($order->refund_status !== 1 || $order->order_status == 5) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('该订单已经申请过退款，请勿重复申请');
+        }
+        // 将用户输入的退款理由放到订单的 extra 字段中
+        $refund_reason = $request->input('reason');
+        // 将订单退款状态改为已申请退款
+        $order->update([
+            'refund_status' => 'applying',
+            'refund_reason' => $refund_reason,
+        ]);
+
+        return $order;
     }
 }

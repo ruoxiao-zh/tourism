@@ -490,13 +490,19 @@ $api->version('v1', [
             // 详情
             $api->get('orders/{order}', 'OrdersController@show')
                 ->name('api.orders.show');
+            // 申请退款
+            $api->post('orders-refund', 'OrdersController@applyRefund')
+                ->name('api.orders.refund');
 
             /**
              * 支付管理
              */
-            // 添加, 购物车添加
+            // 订单支付
             $api->post('pay', 'PaymentController@payByWechat')
                 ->name('api.pay.store');
+            // 订单退款
+            $api->post('pay-refund', 'PaymentController@payRefund')
+                ->name('api.pay.refund');
         });
         // 微信支付回调
         $api->post('payment/wechat/notify', 'PaymentController@wechatNotify')
