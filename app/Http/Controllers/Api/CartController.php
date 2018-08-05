@@ -17,7 +17,8 @@ class CartController extends Controller
             'product_sku_id' => $request->product_sku_id
         ])->first()) {
             $cart->update([
-                'amount' => $cart->amount + $request->amount,
+                'amount'              => $cart->amount + $request->amount,
+                'product_total_money' => ($cart->amount + $request->amount) * $cart->product_price,
             ]);
         } else {
             $data = array_merge($request->all(), ['user_id' => $this->user()->id]);
@@ -28,6 +29,15 @@ class CartController extends Controller
 
         return $this->response->item($cart, new CartTransformer())
             ->setStatusCode(201);
+    }
+
+    public function update(AddCartRequest $request, Cart $cart)
+    {
+        // todo...
+        // $this->authorize('update', $topic);
+        $cart->update($request->all());
+
+        return $this->response->item($cart, new CartTransformer());
     }
 
     public function destroy(Cart $cart)

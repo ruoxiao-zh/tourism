@@ -22,6 +22,7 @@ class CartTransformer extends TransformerAbstract
                     'product_price'       => (float)$cart->travelProduct->price,
                     'product_image'       => $cart->travelProductImage()->image,
                     'product_total_money' => (float)($cart->amount * $cart->travelProduct->price),
+                    'date'                => json_decode($cart->date, true),
                     'created_at'          => $cart->created_at->toDateTimeString(),
                     'updated_at'          => $cart->updated_at->toDateTimeString(),
                 ];
@@ -38,6 +39,7 @@ class CartTransformer extends TransformerAbstract
                     'product_price'       => (float)$cart->hotelProduct->price,
                     'product_image'       => $cart->hotelProductImage()->image,
                     'product_total_money' => (float)($cart->amount * $cart->hotelProduct->price),
+                    'date'                => json_decode($cart->date, true),
                     'created_at'          => $cart->created_at->toDateTimeString(),
                     'updated_at'          => $cart->updated_at->toDateTimeString(),
                 ];
@@ -54,6 +56,7 @@ class CartTransformer extends TransformerAbstract
                     'product_price'       => (float)$cart->ticketProduct->price,
                     'product_image'       => $cart->attractionImage(),
                     'product_total_money' => (float)($cart->amount * $cart->ticketProduct->price),
+                    'date'                => json_decode($cart->date, true),
                     'created_at'          => $cart->created_at->toDateTimeString(),
                     'updated_at'          => $cart->updated_at->toDateTimeString(),
                 ];

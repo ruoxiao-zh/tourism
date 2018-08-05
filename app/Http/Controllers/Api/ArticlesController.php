@@ -30,6 +30,7 @@ class ArticlesController extends Controller
         // todo...
         // $this->authorize('update', $topic);
         $article->update($request->all());
+
         return $this->response->item($article, new ArticleTransformer());
     }
 

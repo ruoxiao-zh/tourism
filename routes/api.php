@@ -20,8 +20,8 @@ $api->version('v1', [
 ], function ($api) {
     $api->group([
         'middleware' => 'api.throttle',
-        'limit'      => config('api.rate_limits.sign.limit'),
-        'expires'    => config('api.rate_limits.sign.expires'),
+        'limit'      => config('api.rate_limits.access.limit'),
+        'expires'    => config('api.rate_limits.access.expires'),
     ], function ($api) {
         // 短信验证码
         $api->post('verificationCodes', 'VerificationCodesController@store')
@@ -457,7 +457,7 @@ $api->version('v1', [
             $api->post('cart', 'CartController@store')
                 ->name('api.cart.store');
             // 更新
-            $api->patch('cart/{slideShow}', 'CartController@update')
+            $api->patch('cart/{cart}', 'CartController@update')
                 ->name('api.cart.update');
             // 删除
             $api->delete('cart/{cart}', 'CartController@destroy')
@@ -468,6 +468,26 @@ $api->version('v1', [
             // 详情
             $api->get('cart/{cart}', 'CartController@show')
                 ->name('api.cart.show');
+
+            // 订单管理
+            // 添加, 购物车添加
+            $api->post('cart-orders', 'OrdersController@cartStore')
+                ->name('api.cart-orders.store');
+            // 添加, 直接购买
+            $api->post('orders', 'OrdersController@store')
+                ->name('api.order.store');
+            // 更新
+            $api->patch('orders/{order}', 'OrdersController@update')
+                ->name('api.orders.update');
+            // 删除
+            $api->delete('orders/{order}', 'OrdersController@destroy')
+                ->name('api.orders.destroy');
+            // 列表
+            $api->get('orders', 'OrdersController@index')
+                ->name('api.orders.index');
+            // 详情
+            $api->get('orders/{order}', 'OrdersController@show')
+                ->name('api.orders.show');
         });
 
         /**
