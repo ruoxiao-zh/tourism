@@ -25,7 +25,7 @@ class PaymentController extends Controller
         return app('wechat_pay')->miniapp([
             'out_trade_no' => $order->no,  // 商户订单流水号，与支付宝 out_trade_no 一样
             'total_fee'    => $order->total_amount * 100, // 与支付宝不同，微信支付的金额单位是分。
-            'body'         => '支付订单：' . $order->no, // 订单描述
+            'body'         => '支付山地旅游黔西南小程序订单：' . $order->no, // 订单描述
             'openid'       => $this->user()->openid, // 当前支付用户的 openid
         ]);
     }
