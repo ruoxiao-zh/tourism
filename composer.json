@@ -16,7 +16,8 @@
         "liyu/dingo-serializer-switch": "^0.3.0",
         "overtrue/laravel-wechat": "~4.0",
         "spatie/laravel-permission": "~2.7",
-        "tymon/jwt-auth": "1.0.0-rc.2"
+        "tymon/jwt-auth": "1.0.0-rc.2",
+        "yansongda/pay": "^2.4"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
