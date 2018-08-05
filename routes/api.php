@@ -469,7 +469,9 @@ $api->version('v1', [
             $api->get('cart/{cart}', 'CartController@show')
                 ->name('api.cart.show');
 
-            // 订单管理
+            /**
+             * 订单管理
+             */
             // 添加, 购物车添加
             $api->post('cart-orders', 'OrdersController@cartStore')
                 ->name('api.cart-orders.store');
@@ -488,6 +490,10 @@ $api->version('v1', [
             // 详情
             $api->get('orders/{order}', 'OrdersController@show')
                 ->name('api.orders.show');
+
+            /**
+             * 支付管理
+             */
         });
 
         /**
