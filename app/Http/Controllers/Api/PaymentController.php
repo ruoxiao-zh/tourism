@@ -80,9 +80,23 @@ class PaymentController extends Controller
             throw new \Dingo\Api\Exception\StoreResourceFailedException('该订单尚未申请退款');
         }
 
-        return app('wechat_pay')->refund([
-            'out_trade_no'  => $order->no,  // 商户订单流水号，与支付宝 out_trade_no 一样
-            'refund_amount' => $order->total_amount * 100, // 与支付宝不同，微信支付的金额单位是分。
+        app('wechat_pay')->refund([
+            'type'          => 'miniapp',
+            'out_trade_no'  => $order->no, // 商户订单流水号
+            'out_refund_no' => time(),
+            'total_fee'     => $order->total_amount * 100, // 订单金额
+            'refund_fee'    => $order->total_amount * 100, // 退款金额
+            'refund_desc'   => '山地旅游黔西南小程序订单退款：' . $order->no,
         ]);
+
+        // 将订单状态改成退款中
+        $refundNo = Order::getAvailableRefundNo();
+        $order->update([
+            'refund_no'     => $refundNo,
+            'refund_status' => 'success',
+        ]);
+
+        return $this->response->array(['refund_status' => 'success'])
+            ->setStatusCode(200);
     }
 }
