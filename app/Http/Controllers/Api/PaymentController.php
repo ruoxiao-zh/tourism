@@ -21,7 +21,7 @@ class PaymentController extends Controller
         if ($order->order_status != 0) {
             throw new \Dingo\Api\Exception\StoreResourceFailedException('订单状态不正确');
         }
-        // scan 方法为拉起微信扫码支付
+        // miniapp 方法为拉起小程序支付
         return app('wechat_pay')->miniapp([
             'out_trade_no' => $order->no,  // 商户订单流水号，与支付宝 out_trade_no 一样
             'total_fee'    => $order->total_amount * 100, // 与支付宝不同，微信支付的金额单位是分。
@@ -59,5 +59,30 @@ class PaymentController extends Controller
         ]);
 
         return app('wechat_pay')->success();
+    }
+
+    /**
+     * 微信退款
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function payRefund(Request $request)
+    {
+        // 校验订单是否属于当前用户
+        $order = Order::where(['user_id' => $this->user()->id, 'id' => $request->order_id])->first();
+        if (!$order) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('订单不存在');
+        }
+
+        if ($order->refund_status != 'applying' || $order->order_status != 4) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('该订单尚未申请退款');
+        }
+
+        return app('wechat_pay')->refund([
+            'out_trade_no'  => $order->no,  // 商户订单流水号，与支付宝 out_trade_no 一样
+            'refund_amount' => $order->total_amount * 100, // 与支付宝不同，微信支付的金额单位是分。
+        ]);
     }
 }
