@@ -11,7 +11,7 @@ class MembersTransformer extends TransformerAbstract
     {
         return [
             'id'         => $member->id,
-            'monetary'   => (float)$member->monetary,
+            'monetary'   => $member->monetary,
             'title_id'   => (int)$member->title_id,
             'title'      => $member->title->name,
             'discount'   => (int)$member->discount,

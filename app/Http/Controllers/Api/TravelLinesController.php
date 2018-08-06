@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\TravelLineRequest;
+use App\Models\TravelCategory;
 use App\Models\TravelLine;
 use App\Models\TravelLineImage;
 use App\Transformers\TravelLineTransformer;
@@ -91,5 +92,12 @@ class TravelLinesController extends Controller
         $travelLine->save();
 
         return $this->response->item($travelLine, new TravelLineTransformer());
+    }
+
+    public function categoryTravelLines(Request $request, TravelCategory $travelCategory)
+    {
+        $travelLines = $travelCategory->travelLines()->paginate(15);
+
+        return $this->response->paginator($travelLines, new TravelLineTransformer());
     }
 }

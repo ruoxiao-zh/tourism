@@ -27,4 +27,17 @@ class Attraction extends Model
     {
         return $this->belongsTo(AttractionsTakeTicketsType::class, 'take_tickets_type_id', 'id');
     }
+
+    public function tickets()
+    {
+        $tickets = Ticket::where('attraction_id', $this->id)->get();
+        if ($tickets) {
+            foreach ($tickets as $key => $ticket) {
+                $ticket_type = TicketType::where('id', $ticket->ticket_type_id)->get();
+                ($tickets[$key])->ticket_type = $ticket_type;
+            }
+        }
+
+        return $tickets;
+    }
 }

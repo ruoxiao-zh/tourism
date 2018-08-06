@@ -13,7 +13,7 @@ class TravelLineTransformer extends TransformerAbstract
             'id'         => $travelLine->id,
             'date'       => $travelLine->date,
             'name'       => $travelLine->name,
-            'price'      => (float)$travelLine->price,
+            'price'      => $travelLine->price,
             'cate_id'    => (int)$travelLine->cate_id,
             'category'   => $travelLine->category->name,
             'status'     => !(boolean)$travelLine->status,

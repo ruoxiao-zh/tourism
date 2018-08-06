@@ -12,4 +12,9 @@ class TravelCategory extends Model
         'name',
         'pid'
     ];
+
+    public function travelLines()
+    {
+        return $this->hasMany(TravelLine::class, 'cate_id', 'id');
+    }
 }

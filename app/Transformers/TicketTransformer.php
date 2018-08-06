@@ -16,7 +16,7 @@ class TicketTransformer extends TransformerAbstract
             'ticket_type_id' => (int)$ticket->ticket_type_id,
             'ticket_type'    => $ticket->ticketType->name,
             'stock'          => (int)$ticket->stock,
-            'price'          => (float)$ticket->price,
+            'price'          => $ticket->price,
             'needs_to_know'  => $ticket->needs_to_know,
             'created_at'     => $ticket->created_at->toDateTimeString(),
             'updated_at'     => $ticket->updated_at->toDateTimeString(),

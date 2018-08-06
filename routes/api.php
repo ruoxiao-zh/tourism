@@ -174,6 +174,9 @@ $api->version('v1', [
         // 详情
         $api->get('hotels/{hotel}', 'HotelsController@show')
             ->name('api.hotels.show');
+        // 获取指定酒店分类下的酒店
+        $api->get('hotel-categories/{hotelCategory}/hotels', 'HotelsController@categoryHotels')
+            ->name('api.hotel-categories.hotels');
 
         /**
          * 房间类型管理
@@ -272,6 +275,9 @@ $api->version('v1', [
         // 详情
         $api->get('travel-lines/{travelLine}', 'TravelLinesController@show')
             ->name('api.travel-lines.show');
+        // 获取指定旅游分类下的旅游线路
+        $api->get('travel-categories/{travelCategory}/travel-lines', 'TravelLinesController@categoryTravelLines')
+            ->name('api.travel-categories.travel-lines');
         // 上架与下架
         $api->get('travel-lines/change-status/{travelLine}', 'TravelLinesController@changeStatus')
             ->name('api.travel-lines.change.status');

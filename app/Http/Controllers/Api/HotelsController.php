@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\HotelRequest;
 use App\Models\Hotel;
+use App\Models\HotelCategory;
 use App\Models\HotelService;
 use App\Transformers\HotelTransformer;
 use Illuminate\Http\Request;
@@ -73,5 +74,12 @@ class HotelsController extends Controller
     public function show(Hotel $hotel)
     {
         return $this->response->item($hotel, new HotelTransformer());
+    }
+
+    public function categoryHotels(Request $request, HotelCategory $hotelCategory)
+    {
+        $hotels = $hotelCategory->hotels()->paginate(15);
+
+        return $this->response->paginator($hotels, new HotelTransformer());
     }
 }
