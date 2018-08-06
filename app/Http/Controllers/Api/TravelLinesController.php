@@ -72,7 +72,12 @@ class TravelLinesController extends Controller
     public function index(Request $request, TravelLine $travelLine)
     {
         $query = $travelLine->query();
-        $travelLines = $query->where('is_delete', 0)->paginate(15);
+        // 搜索条件
+        $search_array = [];
+        if ($request->name) {
+            array_push($search_array, ['name', 'like', '%' . $request->name . '%']);
+        }
+        $travelLines = $query->where('is_delete', 0)->where($search_array)->paginate(15);
 
         return $this->response->paginator($travelLines, new TravelLineTransformer());
     }

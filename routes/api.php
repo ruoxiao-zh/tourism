@@ -490,8 +490,11 @@ $api->version('v1', [
             // 删除
             $api->delete('orders/{order}', 'OrdersController@destroy')
                 ->name('api.orders.destroy');
-            // 列表
+            // 列表 - 不带搜索
             $api->get('orders', 'OrdersController@index')
+                ->name('api.orders.index');
+            // 列表 - 带搜索
+            $api->post('orders', 'OrdersController@index')
                 ->name('api.orders.index');
             // 详情
             $api->get('orders/{order}', 'OrdersController@show')

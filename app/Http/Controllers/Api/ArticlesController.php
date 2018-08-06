@@ -46,7 +46,12 @@ class ArticlesController extends Controller
     public function index(ArticleRequest $request, Article $article)
     {
         $query = $article->query();
-        $article = $query->where('type', $request->type)->paginate(15);
+        // 搜索条件
+        $search_array = [];
+        if ($request->title) {
+            array_push($search_array, ['title', 'like', '%' . $request->title . '%']);
+        }
+        $article = $query->where('type', $request->type)->where($search_array)->paginate(15);
 
         return $this->response->paginator($article, new ArticleTransformer());
     }

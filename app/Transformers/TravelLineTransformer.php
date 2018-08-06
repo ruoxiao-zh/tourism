@@ -11,7 +11,7 @@ class TravelLineTransformer extends TransformerAbstract
     {
         return [
             'id'         => $travelLine->id,
-            'date'       => $travelLine->date,
+            'date'       => json_decode($travelLine->date, true),
             'name'       => $travelLine->name,
             'price'      => $travelLine->price,
             'cate_id'    => (int)$travelLine->cate_id,

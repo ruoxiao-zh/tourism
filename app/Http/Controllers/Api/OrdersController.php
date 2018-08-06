@@ -150,7 +150,12 @@ class OrdersController extends Controller
     public function index(Request $request, Order $order)
     {
         $query = $order->query();
-        $orders = $query->paginate(15);
+        // 搜索条件
+        $search_array = [];
+        if ((int)$request->order_status) {
+            array_push($search_array, ['order_status', (int)$request->order_status]);
+        }
+        $orders = $query->where($search_array)->paginate(15);
 
         return $this->response->paginator($orders, new OrderTransformer());
     }
