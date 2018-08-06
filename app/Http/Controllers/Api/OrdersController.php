@@ -6,6 +6,8 @@ use App\Http\Requests\Api\ApplyRefundRequest;
 use App\Http\Requests\Api\CartOrderRequest;
 use App\Http\Requests\Api\OrderRequest;
 use App\Models\Cart;
+use App\Models\CheckCoder;
+use App\Models\CheckCoderOrder;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Ticket;
@@ -158,5 +160,43 @@ class OrdersController extends Controller
         $orders = $query->where($search_array)->paginate(15);
 
         return $this->response->paginator($orders, new OrderTransformer());
+    }
+
+    public function verification(Request $request, Order $order, CheckCoder $checkCoder, CheckCoderOrder $checkCoderOrder)
+    {
+        // 核销码
+        $code = $request->input('code');
+        if ($order->order_status != 1) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('该订单状态不符合核销要求, 无法核销');
+        }
+
+        if ($order->type == 'cart') {
+            $code_collection = $checkCoder::where('status', 1)->pluck('code');
+        } else {
+            $code_collection = $checkCoder::where('type', $order->type)->where('status', 1)->pluck('code');
+        }
+        if ($code_collection) {
+            if (!in_array($code, $code_collection->toArray())) {
+                throw new \Dingo\Api\Exception\StoreResourceFailedException('核销码不正确');
+            }
+            foreach ($code_collection as $key => $code_item) {
+                if ($code == $code_item) {
+                    $updata_order_result = $order->update([
+                        'order_status' => 3
+                    ]);
+
+                    // 订单状态 (0: 未支付 1:已支付 2: 已发货 3: 确认收货, 完成 4: 申请退款 5: 退款完成)
+                    $checkCoderOrder->insert([
+                        'check_coder_id' => $checkCoder->where('code', $code_item)->first()->id,
+                        'order_id'       => $order->id,
+                        'status'         => (boolean)$updata_order_result,
+                        'created_at'     => Carbon::now(),
+                        'updated_at'     => Carbon::now(),
+                    ]);
+                }
+            }
+        }
+
+        return $this->response->item($order, new OrderTransformer());
     }
 }

@@ -502,6 +502,9 @@ $api->version('v1', [
             // 申请退款
             $api->post('orders-refund', 'OrdersController@applyRefund')
                 ->name('api.orders.refund');
+            // 订单核销
+            $api->post('orders/{order}/verification', 'OrdersController@verification')
+                ->name('api.orders.verification');
 
             /**
              * 支付管理
