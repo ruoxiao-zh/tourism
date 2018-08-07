@@ -494,7 +494,7 @@ $api->version('v1', [
             $api->get('orders', 'OrdersController@index')
                 ->name('api.orders.index');
             // 列表 - 带搜索
-            $api->post('orders', 'OrdersController@index')
+            $api->get('orders', 'OrdersController@index')
                 ->name('api.orders.index');
             // 详情
             $api->get('orders/{order}', 'OrdersController@show')
