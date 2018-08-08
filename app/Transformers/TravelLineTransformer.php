@@ -17,6 +17,7 @@ class TravelLineTransformer extends TransformerAbstract
             'cate_id'    => (int)$travelLine->cate_id,
             'category'   => $travelLine->category->name,
             'status'     => !(boolean)$travelLine->status,
+            'is_index'   => (boolean)$travelLine->is_index,
             'images'     => $travelLine->images,
             'created_at' => $travelLine->created_at->toDateTimeString(),
             'updated_at' => $travelLine->updated_at->toDateTimeString(),

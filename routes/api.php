@@ -281,6 +281,9 @@ $api->version('v1', [
         // 上架与下架
         $api->get('travel-lines/change-status/{travelLine}', 'TravelLinesController@changeStatus')
             ->name('api.travel-lines.change.status');
+        // 推荐首页
+        $api->get('travel-lines/change-index/{travelLine}', 'TravelLinesController@changeIndex')
+            ->name('api.travel-lines.change.index');
 
         /**
          * 景点取票方式管理
@@ -490,12 +493,12 @@ $api->version('v1', [
             // 删除
             $api->delete('orders/{order}', 'OrdersController@destroy')
                 ->name('api.orders.destroy');
-            // 列表 - 不带搜索
+            // 列表 - 后台
             $api->get('orders', 'OrdersController@index')
                 ->name('api.orders.index');
-            // 列表 - 带搜索
-            $api->get('orders', 'OrdersController@index')
-                ->name('api.orders.index');
+            // 列表 - 前台
+            $api->get('mine-orders', 'OrdersController@mineIndex')
+                ->name('api.mine-orders.index');
             // 详情
             $api->get('orders/{order}', 'OrdersController@show')
                 ->name('api.orders.show');

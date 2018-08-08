@@ -64,7 +64,7 @@ class OrdersController extends Controller
         });
 
 
-	return $this->response->item($order, new OrderTransformer())
+        return $this->response->item($order, new OrderTransformer())
             ->setStatusCode(201);
     }
 
@@ -160,10 +160,33 @@ class OrdersController extends Controller
         if ((int)$request->order_status == 6) {
             array_push($search_array, ['order_status', 0]);
         } else if ((int)$request->order_status != 0) {
-	    array_push($search_array, ['order_status', (int)$request->order_status]);
-	}
+            array_push($search_array, ['order_status', (int)$request->order_status]);
+        }
+        if ($request->type) {
+            array_push($search_array, ['type', $request->type]);
+        }
 
-        $orders = $query->where($search_array)->paginate(15);
+        $orders = $query->where('type', 'cart')->where($search_array)->paginate(15);
+
+        return $this->response->paginator($orders, new OrderTransformer());
+    }
+
+    public function mineIndex(Request $request, Order $order)
+    {
+        $query = $order->query();
+        // 搜索条件
+        $search_array = [];
+
+        if ((int)$request->order_status == 6) {
+            array_push($search_array, ['order_status', 0]);
+        } else if ((int)$request->order_status != 0) {
+            array_push($search_array, ['order_status', (int)$request->order_status]);
+        }
+        if ($request->type) {
+            array_push($search_array, ['type', $request->type]);
+        }
+
+        $orders = $query->where('user_id', $this->user()->id)->where('type', 'cart')->where($search_array)->paginate(15);
 
         return $this->response->paginator($orders, new OrderTransformer());
     }

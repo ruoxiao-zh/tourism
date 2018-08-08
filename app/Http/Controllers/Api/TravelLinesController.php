@@ -77,6 +77,9 @@ class TravelLinesController extends Controller
         if ($request->name) {
             array_push($search_array, ['name', 'like', '%' . $request->name . '%']);
         }
+        if ($request->index) {
+            array_push($search_array, ['is_index', 1]);
+        }
         $travelLines = $query->where('is_delete', 0)->where($search_array)->paginate(15);
 
         return $this->response->paginator($travelLines, new TravelLineTransformer());
@@ -99,9 +102,21 @@ class TravelLinesController extends Controller
         return $this->response->item($travelLine, new TravelLineTransformer());
     }
 
+    public function changeIndex(TravelLine $travelLine)
+    {
+        if ($travelLine->is_index) {
+            $travelLine->is_index = 0;
+        } else {
+            $travelLine->is_index = 1;
+        }
+        $travelLine->save();
+
+        return $this->response->item($travelLine, new TravelLineTransformer());
+    }
+
     public function categoryTravelLines(Request $request, TravelCategory $travelCategory)
     {
-        $travelLines = $travelCategory->travelLines()->paginate(15);
+        $travelLines = $travelCategory->travelLines()->where('is_delete', 0)->where('status', 0)->paginate(15);
 
         return $this->response->paginator($travelLines, new TravelLineTransformer());
     }

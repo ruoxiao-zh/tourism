@@ -51,7 +51,7 @@ class ArticlesController extends Controller
         if ($request->title) {
             array_push($search_array, ['title', 'like', '%' . $request->title . '%']);
         }
-        $article = $query->where('type', $request->type)->where($search_array)->paginate(15);
+        $article = $query->where('type', $request->type)->where($search_array)->orderBy('is_index', 'desc')->orderBy('is_top', 'desc')->paginate(15);
 
         return $this->response->paginator($article, new ArticleTransformer());
     }

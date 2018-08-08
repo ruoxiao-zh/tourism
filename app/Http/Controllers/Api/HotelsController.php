@@ -66,7 +66,11 @@ class HotelsController extends Controller
     public function index(Request $request, Hotel $hotel)
     {
         $query = $hotel->query();
-        $hotels = $query->where('is_delete', 0)->paginate(15);
+        $search_where = [];
+        if ($request->name) {
+            array_push($search_where, ['name', 'like', '%' . $request->name . '%']);
+        }
+        $hotels = $query->where($search_where)->where('is_delete', 0)->paginate(15);
 
         return $this->response->paginator($hotels, new HotelTransformer());
     }

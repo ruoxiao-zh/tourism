@@ -23,7 +23,9 @@ class HotelTransformer extends TransformerAbstract
             'introduce'  => $hotel->introduce,
             'cate_id'    => $hotel->cate_id,
             'category'   => $hotel->category->name,
+            'min_price'      => $hotel->getMinPrice(),
             'services'   => $hotel->services,
+            'rooms'     => $hotel->rooms(),
             'created_at' => $hotel->created_at->toDateTimeString(),
             'updated_at' => $hotel->updated_at->toDateTimeString(),
         ];
