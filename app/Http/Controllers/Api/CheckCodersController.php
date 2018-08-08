@@ -6,6 +6,7 @@ use App\Http\Requests\Api\CheckCoderRequest;
 use App\Models\CheckCoder;
 use App\Transformers\CheckCoderTransformer;
 use Illuminate\Http\Request;
+use Overtrue\EasySms\EasySms;
 
 class CheckCodersController extends Controller
 {
@@ -61,5 +62,23 @@ class CheckCodersController extends Controller
         $checkCoder->save();
 
         return $this->response->item($checkCoder, new CheckCoderTransformer());
+    }
+
+    public function sendMessage(CheckCoder $checkCoder, EasySms $easySms)
+    {
+        // 发送短信
+        try {
+            $easySms->send($checkCoder->phone, [
+                'template' => env('ALIYUN_CHECK_CODER_TEMPLATE', ''),
+                'data'     => [
+                    'name' => $checkCoder->name,
+                    'code' => $checkCoder->code
+                ],
+            ]);
+        } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception) {
+            $message = $exception->getException('aliyun')->getMessage();
+
+            return $this->response->errorInternal($message ?? '短信发送异常');
+        }
     }
 }

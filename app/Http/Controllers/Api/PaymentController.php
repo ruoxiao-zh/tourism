@@ -2,9 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Attraction;
+use App\Models\Hotel;
+use App\Models\HotelRoom;
+use App\Models\HotelRoomType;
 use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Ticket;
+use App\Models\TravelLine;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Overtrue\EasySms\EasySms;
 
 class PaymentController extends Controller
 {
@@ -50,6 +58,35 @@ class PaymentController extends Controller
             // 告知微信支付此订单已处理
             return app('wechat_pay')->success();
         }
+        $order_items = OrderItem::where('order_id', $order->id)->get();
+        if ($order_items) {
+            $goods_list = [];
+            foreach ($order_items as $key => $item) {
+                switch ($item->type) {
+                    case 'travel':
+                        // 名称
+                        $travel = TravelLine::find($item->product_id);
+                        $goods_list[] = $travel->name . '旅游线路';
+                        break;
+                    case 'ticket':
+                        // 图片
+                        $ticket = Ticket::where('id', $item->product_id)->first();
+                        $attraction = Attraction::find($ticket->attraction_id);
+                        // 名称
+                        $goods_list[] = $attraction->name . '旅游门票';
+                        break;
+                    case 'hotel':
+                        // 名称
+                        $hotel_room = HotelRoom::find($item->product_id);
+                        $hotel = Hotel::where('id', $hotel_room->hotel_id)->first();
+                        $hotel_room_type = HotelRoomType::where('id', $hotel_room->hotel_room_type_id)->first();
+                        $goods_list[] = $hotel->name . $hotel_room_type->type . '房间';
+
+                        break;
+                }
+                $goods_list = implode(',', $goods_list);
+            }
+        }
 
         // 将订单标记为已支付
         $order->update([
@@ -57,6 +94,22 @@ class PaymentController extends Controller
             'payment_no'   => $data->transaction_id,
             'order_status' => 1,
         ]);
+
+        // 发送短信
+        $easySms = new EasySms();
+        try {
+            $easySms->send($order->phone, [
+                'template' => env('ALIYUN_PAY_SUCCESS_TEMPLATE', ''),
+                'data'     => [
+                    'name'    => '山地旅游黔西南小程序',
+                    'content' => $goods_list
+                ],
+            ]);
+        } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception) {
+            $message = $exception->getException('aliyun')->getMessage();
+
+            return $this->response->errorInternal($message ?? '短信发送异常');
+        }
 
         return app('wechat_pay')->success();
     }
