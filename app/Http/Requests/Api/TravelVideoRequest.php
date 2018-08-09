@@ -12,7 +12,7 @@ class TravelVideoRequest extends BaseRequest
             'video' => 'required|string|max:255',
             'type'  => [
                 'required',
-                Rule::in(['travel', 'hotel', 'sports', 'culture']),
+                Rule::in(['travel', 'hotel', 'sports', 'culture', 'walk']),
             ]
         ];
     }
@@ -24,7 +24,7 @@ class TravelVideoRequest extends BaseRequest
             'video.string'   => '视频超链接必须为字符串类型',
             'video.max'      => '视频超链接最大字符长度不能超过 100 个字符',
             'type.required'  => '视频类型不能为空',
-            'type.in'        => '视频类型只能是 [travel, hotel, sports, culture] 数组中的任一值',
+            'type.in'        => '视频类型只能是 [travel, hotel, sports, culture, walk] 数组中的任一值',
         ];
     }
 }

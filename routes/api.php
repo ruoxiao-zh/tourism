@@ -23,13 +23,6 @@ $api->version('v1', [
         'limit'      => config('api.rate_limits.access.limit'),
         'expires'    => config('api.rate_limits.access.expires'),
     ], function ($api) {
-        // 短信验证码
-        $api->post('verificationCodes', 'VerificationCodesController@store')
-            ->name('api.verificationCodes.store');
-        // 用户注册
-        $api->post('users', 'UsersController@store')
-            ->name('api.users.store');
-
         /**
          * 公司管理
          */
@@ -221,6 +214,25 @@ $api->version('v1', [
         // 详情
         $api->get('hotel-rooms/{hotelRoom}', 'HotelRoomsController@show')
             ->name('api.hotel-rooms.show');
+
+        /**
+         * 徒步旅游管理
+         */
+        // 添加
+        $api->post('walk-categories', 'WalkCategoryController@store')
+            ->name('api.walk-categories.store');
+        // 更新
+        $api->patch('walk-categories/{walkCategory}', 'WalkCategoryController@update')
+            ->name('api.walk-categories.update');
+        // 删除
+        $api->delete('walk-categories/{walkCategory}', 'WalkCategoryController@destroy')
+            ->name('api.walk-categories.destroy');
+        // 列表
+        $api->get('walk-categories', 'WalkCategoryController@index')
+            ->name('api.walk-categories.index');
+        // 详情
+        $api->get('walk-categories/{walkCategory}', 'WalkCategoryController@show')
+            ->name('api.walk-categories.show');
 
         /**
          * 旅游分类管理
