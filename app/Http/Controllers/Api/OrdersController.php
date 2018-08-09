@@ -163,10 +163,11 @@ class OrdersController extends Controller
             array_push($search_array, ['order_status', (int)$request->order_status]);
         }
         if ($request->type) {
-            array_push($search_array, ['type', $request->type]);
+	    $search_type = ['cart'];
+            $search_type[] = $request->type;
         }
 
-        $orders = $query->where('type', 'cart')->where($search_array)->paginate(15);
+        $orders = $query->whereIn('type', $search_type)->where($search_array)->paginate(15);
 
         return $this->response->paginator($orders, new OrderTransformer());
     }
@@ -183,10 +184,11 @@ class OrdersController extends Controller
             array_push($search_array, ['order_status', (int)$request->order_status]);
         }
         if ($request->type) {
-            array_push($search_array, ['type', $request->type]);
+	    $search_type = ['cart'];
+            $search_type[] = $request->type;
         }
 
-        $orders = $query->where('user_id', $this->user()->id)->where('type', 'cart')->where($search_array)->paginate(15);
+        $orders = $query->where('user_id', $this->user()->id)->whereIn('type', $search_type)->where($search_array)->paginate(15);
 
         return $this->response->paginator($orders, new OrderTransformer());
     }
