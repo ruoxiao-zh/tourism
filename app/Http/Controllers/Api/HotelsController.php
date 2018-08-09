@@ -70,6 +70,9 @@ class HotelsController extends Controller
         if ($request->name) {
             array_push($search_where, ['name', 'like', '%' . $request->name . '%']);
         }
+        if ($request->is_index) {
+            array_push($search_where, ['is_index', 1]);
+        }
         $hotels = $query->where($search_where)->where('is_delete', 0)->paginate(15);
 
         return $this->response->paginator($hotels, new HotelTransformer());
@@ -85,5 +88,17 @@ class HotelsController extends Controller
         $hotels = $hotelCategory->hotels()->paginate(15);
 
         return $this->response->paginator($hotels, new HotelTransformer());
+    }
+
+    public function changeIndex(Request $request, Hotel $hotel)
+    {
+        if ($hotel->is_index) {
+            $hotel->is_index = 0;
+        } else {
+            $hotel->is_index = 1;
+        }
+        $hotel->save();
+
+        return $this->response->item($hotel, new HotelTransformer());
     }
 }

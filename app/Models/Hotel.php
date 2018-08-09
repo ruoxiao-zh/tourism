@@ -47,7 +47,7 @@ class Hotel extends Model
                 if ($images) {
                     ($rooms[$key])->image = $images->image;
                 }
-                $types = HotelRoomType::where('id', $room->hotel_room_id)->first();
+                $types = HotelRoomType::where('id', $room->hotel_room_type_id)->first();
                 if ($types) {
                     ($rooms[$key])->type = $types->type;
                 }

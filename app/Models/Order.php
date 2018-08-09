@@ -84,8 +84,8 @@ class Order extends Model
                         $hotel_room = HotelRoom::find($item->product_id);
                         $hotel = Hotel::where('id', $hotel_room->hotel_id)->first();
                         $hotel_room_type = HotelRoomType::where('id', $hotel_room->hotel_room_type_id)->first();
-
                         ($order_items[$key])->name = $hotel->name . $hotel_room_type->type;
+                        ($order_items[$key])->hotel_rooms = $hotel_room;
                         // 日期
                         ($order_items[$key])->date = json_decode($item->date, true);
                         break;

@@ -180,6 +180,9 @@ $api->version('v1', [
         // 获取指定酒店分类下的酒店
         $api->get('hotel-categories/{hotelCategory}/hotels', 'HotelsController@categoryHotels')
             ->name('api.hotel-categories.hotels');
+        // 推荐首页
+        $api->get('hotels/change-index/{hotel}', 'HotelsController@changeIndex')
+            ->name('api.hotels.change.index');
 
         /**
          * 房间类型管理

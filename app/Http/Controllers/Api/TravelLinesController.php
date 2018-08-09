@@ -80,7 +80,7 @@ class TravelLinesController extends Controller
         if ($request->index) {
             array_push($search_array, ['is_index', 1]);
         }
-        $travelLines = $query->where('is_delete', 0)->where($search_array)->paginate(15);
+        $travelLines = $query->where('is_delete', 0)->where('status', 0)->where($search_array)->paginate(15);
 
         return $this->response->paginator($travelLines, new TravelLineTransformer());
     }

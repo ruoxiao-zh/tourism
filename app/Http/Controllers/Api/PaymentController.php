@@ -38,12 +38,8 @@ class PaymentController extends Controller
         ]);
     }
 
-    /**
-     * 微信支付回调
-     *
-     * @return string
-     */
-    public function wechatNotify()
+    // 微信支付回调
+    public function wechatNotify(EasySms $easySms)
     {
         // 校验回调参数是否正确
         $data = app('wechat_pay')->verify();
@@ -59,8 +55,8 @@ class PaymentController extends Controller
             return app('wechat_pay')->success();
         }
         $order_items = OrderItem::where('order_id', $order->id)->get();
+        $goods_list = [];
         if ($order_items) {
-            $goods_list = [];
             foreach ($order_items as $key => $item) {
                 switch ($item->type) {
                     case 'travel':
@@ -96,7 +92,6 @@ class PaymentController extends Controller
         ]);
 
         // 发送短信
-        $easySms = new EasySms();
         try {
             $easySms->send($order->phone, [
                 'template' => env('ALIYUN_PAY_SUCCESS_TEMPLATE', ''),
