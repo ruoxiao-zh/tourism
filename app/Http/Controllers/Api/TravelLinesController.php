@@ -69,6 +69,22 @@ class TravelLinesController extends Controller
         return $this->response->noContent();
     }
 
+    public function frontIndex(Request $request, TravelLine $travelLine)
+    {
+        $query = $travelLine->query();
+        // 搜索条件
+        $search_array = [];
+        if ($request->name) {
+            array_push($search_array, ['name', 'like', '%' . $request->name . '%']);
+        }
+        if ($request->index) {
+            array_push($search_array, ['is_index', 1]);
+        }
+        $travelLines = $query->where('is_delete', 0)->where($search_array)->paginate(15);
+
+        return $this->response->paginator($travelLines, new TravelLineTransformer());
+    }
+
     public function index(Request $request, TravelLine $travelLine)
     {
         $query = $travelLine->query();

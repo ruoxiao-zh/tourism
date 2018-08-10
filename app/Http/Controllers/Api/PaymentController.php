@@ -119,10 +119,10 @@ class PaymentController extends Controller
     public function payRefund(Request $request)
     {
         // 校验订单是否属于当前用户
-        // $order = Order::where(['user_id' => $this->user()->id, 'id' => $request->order_id])->first();
-        // if (!$order) {
-            // throw new \Dingo\Api\Exception\StoreResourceFailedException('订单不存在');
-        // }
+        $order = Order::where(['id' => $request->order_id])->first();
+        if (!$order) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('订单不存在');
+        }
 
         if ($order->refund_status != 'applying' || $order->order_status != 4) {
             throw new \Dingo\Api\Exception\StoreResourceFailedException('该订单尚未申请退款');
@@ -147,5 +147,30 @@ class PaymentController extends Controller
 
         return $this->response->array(['refund_status' => 'success'])
             ->setStatusCode(200);
+    }
+
+    public function goodsDeliver(Request $request)
+    {
+        // 校验订单是否属于当前用户
+        $order = Order::where(['id' => $request->order_id])->first();
+        if (!$order) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('订单不存在');
+        }
+        // 订单状态 (0: 未支付 1:已支付 2: 已发货 3: 确认收货, 完成 4: 申请退款 5: 退款完成)
+        if ($order->order_status == 1) {
+            $order->update([
+                'order_status' => 2,
+            ]);
+
+            return $this->response->array(['delivery_status' => 'success'])
+                ->setStatusCode(200);
+        }
+
+        if ($order->order_status == 2) {
+            return $this->response->array(['delivery_status' => 'success'])
+                ->setStatusCode(200);
+        }
+
+        throw new \Dingo\Api\Exception\StoreResourceFailedException('订单状态不符合规范');
     }
 }

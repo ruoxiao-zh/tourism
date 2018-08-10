@@ -287,7 +287,9 @@ $api->version('v1', [
         // 删除
         $api->delete('travel-lines/{travelLine}', 'TravelLinesController@destroy')
             ->name('api.travel-lines.destroy');
-        // 列表
+        $api->get('front-travel-lines', 'TravelLinesController@frontIndex')
+            ->name('api.travel-lines.front.index');
+        // 列表 - 后台
         $api->get('travel-lines', 'TravelLinesController@index')
             ->name('api.travel-lines.index');
         // 详情
@@ -534,6 +536,9 @@ $api->version('v1', [
             $api->post('pay', 'PaymentController@payByWechat')
                 ->name('api.pay.store');
         });
+        // 订单发货
+        $api->post('orders-deliver', 'PaymentController@goodsDeliver')
+            ->name('api.orders.delivery');
         // 订单退款
         $api->post('pay-refund', 'PaymentController@payRefund')
             ->name('api.pay.refund');
