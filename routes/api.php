@@ -216,7 +216,7 @@ $api->version('v1', [
             ->name('api.hotel-rooms.show');
 
         /**
-         * 徒步旅游管理
+         * 徒步旅游分类管理
          */
         // 添加
         $api->post('walk-categories', 'WalkCategoryController@store')
@@ -233,6 +233,25 @@ $api->version('v1', [
         // 详情
         $api->get('walk-categories/{walkCategory}', 'WalkCategoryController@show')
             ->name('api.walk-categories.show');
+
+        /**
+         * 徒步旅游管理
+         */
+        // 添加
+        $api->post('walk', 'WalkController@store')
+            ->name('api.walk.store');
+        // 更新
+        $api->patch('walk/{walkLine}', 'WalkController@update')
+            ->name('api.walk.update');
+        // 删除
+        $api->delete('walk/{walkLine}', 'WalkController@destroy')
+            ->name('api.walk.destroy');
+        // 列表
+        $api->get('walk', 'WalkController@index')
+            ->name('api.walk.index');
+        // 详情
+        $api->get('walk/{walkLine}', 'WalkController@show')
+            ->name('api.walk.show');
 
         /**
          * 旅游分类管理

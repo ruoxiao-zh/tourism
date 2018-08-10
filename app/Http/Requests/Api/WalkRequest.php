@@ -24,7 +24,7 @@ class WalkRequest extends BaseRequest
                     'walk_category_id' => 'required|numeric',
                     'images'           => 'required|json',
                     'introduce'        => 'required|string',
-                    'date'             => 'required|json',
+                    'data'             => 'required|json',
                 ];
                 break;
         }
