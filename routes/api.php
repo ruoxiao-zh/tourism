@@ -533,10 +533,10 @@ $api->version('v1', [
             // 订单支付
             $api->post('pay', 'PaymentController@payByWechat')
                 ->name('api.pay.store');
-            // 订单退款
-            $api->post('pay-refund', 'PaymentController@payRefund')
-                ->name('api.pay.refund');
         });
+        // 订单退款
+        $api->post('pay-refund', 'PaymentController@payRefund')
+            ->name('api.pay.refund');
         // 微信支付回调
         $api->post('payment/wechat/notify', 'PaymentController@wechatNotify')
             ->name('payment.wechat.notify');

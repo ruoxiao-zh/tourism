@@ -119,10 +119,10 @@ class PaymentController extends Controller
     public function payRefund(Request $request)
     {
         // 校验订单是否属于当前用户
-        $order = Order::where(['user_id' => $this->user()->id, 'id' => $request->order_id])->first();
-        if (!$order) {
-            throw new \Dingo\Api\Exception\StoreResourceFailedException('订单不存在');
-        }
+        // $order = Order::where(['user_id' => $this->user()->id, 'id' => $request->order_id])->first();
+        // if (!$order) {
+            // throw new \Dingo\Api\Exception\StoreResourceFailedException('订单不存在');
+        // }
 
         if ($order->refund_status != 'applying' || $order->order_status != 4) {
             throw new \Dingo\Api\Exception\StoreResourceFailedException('该订单尚未申请退款');
