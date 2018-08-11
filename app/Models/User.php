@@ -19,7 +19,15 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_admin', 'openid', 'nickname', 'avatar'
+        'name',
+        'email',
+        'password',
+        'is_admin',
+        'openid',
+        'nickname',
+        'avatar',
+        'integral',
+        'monetary',
     ];
 
     /**
@@ -28,7 +36,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     // Rest omitted for brevity
@@ -41,5 +50,37 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function title()
+    {
+        $members = Member::orderBy('monetary', 'desc')->get();
+        foreach ($members as $key => $value) {
+            if ($this->monetary >= $value->monetary) {
+                if ($value->is_forbid) {
+                    return '暂无会员等级';
+                }
+                $title = MemberTitle::where('id', $value->title_id)->first();
+
+                return $title->name;
+            }
+        }
+
+        return '暂无会员等级';
+    }
+
+    public function discount()
+    {
+        $members = Member::orderBy('monetary', 'desc')->get();
+        foreach ($members as $key => $value) {
+            if ($this->monetary >= $value->monetary) {
+                if ($value->is_forbid) {
+                    return '0';
+                }
+                return $value->discount;
+            }
+        }
+
+        return '0';
     }
 }

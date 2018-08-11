@@ -64,4 +64,15 @@ class UsersController extends Controller
             ])
             ->setStatusCode(200);
     }
+
+    public function creditsExchange()
+    {
+        $user = User::find($this->user()->id);
+        $user->update([
+            'monetary' => $user->integral,
+            'integral' => 0
+        ]);
+
+        return $this->response->item($this->user(), new UserTransformer());
+    }
 }

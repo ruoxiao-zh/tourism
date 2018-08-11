@@ -7,10 +7,12 @@ use App\Models\Hotel;
 use App\Models\HotelRoom;
 use App\Models\HotelRoomReservationInfo;
 use App\Models\HotelRoomType;
+use App\Models\Member;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Ticket;
 use App\Models\TravelLine;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Overtrue\EasySms\EasySms;
@@ -37,10 +39,23 @@ class PaymentController extends Controller
         if ($order->order_status != 0) {
             throw new \Dingo\Api\Exception\StoreResourceFailedException('订单状态不正确');
         }
+        // 支付金额
+        $total_amount = $order->total_amount * 100;
+        // 判断当前用户的会员资格, 如果满足发生价格优惠
+        $user = User::find($this->user()->id);
+        $members = Member::orderBy('monetary', 'desc')->get();
+        foreach ($members as $key => $value) {
+            if ($user->monetary >= $value->monetary) {
+                // 会员资格
+                if (!$value->is_forbid) {
+                    $total_amount = $total_amount * $value->discount / 10;
+                }
+            }
+        }
         // miniapp 方法为拉起小程序支付
         return app('wechat_pay')->miniapp([
             'out_trade_no' => $order->no,  // 商户订单流水号，与支付宝 out_trade_no 一样
-            'total_fee'    => $order->total_amount * 100, // 与支付宝不同，微信支付的金额单位是分。
+            'total_fee'    => $total_amount, // 与支付宝不同，微信支付的金额单位是分。
             'body'         => '山地旅游黔西南小程序订单：' . $order->no, // 订单描述
             'openid'       => $this->user()->openid, // 当前支付用户的 openid
         ]);
@@ -104,6 +119,12 @@ class PaymentController extends Controller
             'paid_at'      => Carbon::now(),
             'payment_no'   => $data->transaction_id,
             'order_status' => 1,
+        ]);
+
+        // 将用户消费金额写入用户积分
+        $user = User::find($order->user_id);
+        User::where('id', $order->user_id)->update([
+            'integral' => $user->integral + $order->total_amount
         ]);
 
         // 发送短信

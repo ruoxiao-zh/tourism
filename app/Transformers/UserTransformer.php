@@ -16,6 +16,8 @@ class UserTransformer extends TransformerAbstract
             'avatar'     => $user->avatar,
             'openid'     => $user->openid,
             'integral'   => $user->integral,
+            'title'      => $user->title(),
+            'discount'   => $user->discount(),
             'email'      => $user->email,
             'is_admin'   => (boolean)$user->is_admin,
             'created_at' => $user->created_at->toDateTimeString(),

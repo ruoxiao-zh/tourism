@@ -69,6 +69,9 @@ class WalkController extends Controller
         if ($request->is_index == 'true') {
             array_push($search_where, ['is_index', 1]);
         }
+        if ($request->name) {
+            array_push($search_where, ['name', 'like', '%' . $request->name . '%']);
+        }
         $walkLines = $query->where($search_where)->orderBy('is_index', 'desc')->orderBy('created_at', 'desc')->paginate(15);
 
         return $this->response->paginator($walkLines, new WalkTransformer());
