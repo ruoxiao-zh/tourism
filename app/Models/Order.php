@@ -145,7 +145,7 @@ class Order extends Model
                 return '已支付';
                 break;
             case 2:
-                return '已支付';
+                return '已发货';
                 break;
             case 3:
                 return '完成';
