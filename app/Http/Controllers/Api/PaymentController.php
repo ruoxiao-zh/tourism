@@ -16,6 +16,13 @@ use Overtrue\EasySms\EasySms;
 
 class PaymentController extends Controller
 {
+    /**
+     * 微信支付
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function payByWechat(Request $request)
     {
         // 校验订单权限
@@ -149,6 +156,13 @@ class PaymentController extends Controller
             ->setStatusCode(200);
     }
 
+    /**
+     * 订单发货
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function goodsDeliver(Request $request)
     {
         // 校验订单是否属于当前用户

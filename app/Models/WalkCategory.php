@@ -12,4 +12,9 @@ class WalkCategory extends Model
         'name',
         'pid'
     ];
+
+    public function walks()
+    {
+        return $this->hasMany(WalkLine::class, 'walk_category_id', 'id');
+    }
 }

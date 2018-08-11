@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\WalkRequest;
+use App\Models\WalkCategory;
 use App\Models\WalkLine;
 use App\Models\WalkLineDetail;
 use App\Transformers\WalkTransformer;
@@ -64,13 +65,36 @@ class WalkController extends Controller
     public function index(Request $request, WalkLine $walkLine)
     {
         $query = $walkLine->query();
-        $walkLines = $query->paginate(15);
+        $search_where = [];
+        if ($request->is_index == 'true') {
+            array_push($search_where, ['is_index', 1]);
+        }
+        $walkLines = $query->where($search_where)->orderBy('is_index', 'desc')->orderBy('created_at', 'desc')->paginate(15);
 
         return $this->response->paginator($walkLines, new WalkTransformer());
     }
 
     public function show(WalkLine $walkLine)
     {
+        return $this->response->item($walkLine, new WalkTransformer());
+    }
+
+    public function categoryWalk(Request $request, WalkCategory $walkCategory)
+    {
+        $walks = $walkCategory->walks()->paginate(15);
+
+        return $this->response->paginator($walks, new WalkTransformer());
+    }
+
+    public function changeIndex(Request $request, WalkLine $walkLine)
+    {
+        if ($walkLine->is_index) {
+            $walkLine->is_index = 0;
+        } else {
+            $walkLine->is_index = 1;
+        }
+        $walkLine->save();
+
         return $this->response->item($walkLine, new WalkTransformer());
     }
 }

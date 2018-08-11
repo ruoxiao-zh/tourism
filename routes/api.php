@@ -252,6 +252,12 @@ $api->version('v1', [
         // 详情
         $api->get('walk/{walkLine}', 'WalkController@show')
             ->name('api.walk.show');
+        // 徒步旅游分类下的所有徒步旅游线路
+        $api->get('walk-categories/{walkCategory}/walk', 'WalkController@categoryWalk')
+            ->name('api.walk-categories.show');
+        // 推荐首页或取消推荐首页
+        $api->get('walk/change-index/{walkLine}', 'WalkController@changeIndex')
+            ->name('api.walk.change.index');
 
         /**
          * 旅游分类管理
@@ -287,9 +293,6 @@ $api->version('v1', [
         // 列表
         $api->get('travel-videos', 'TravelVideosController@index')
             ->name('api.travel-videos.index');
-        // 详情
-        $api->get('travel-videos/{travelVideo}', 'TravelVideosController@show')
-            ->name('api.travel-videos.show');
         // 详情
         $api->get('travel-videos/{travelVideo}', 'TravelVideosController@show')
             ->name('api.travel-videos.show');
