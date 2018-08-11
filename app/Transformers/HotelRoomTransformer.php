@@ -25,6 +25,7 @@ class HotelRoomTransformer extends TransformerAbstract
             'hotel_room_type_id' => $hotelRoom->hotel_room_type_id,
             'hotel_room_type'    => $hotelRoom->hotelRoomType->type,
             'images'             => $hotelRoom->images,
+            'sold_time'          => $hotelRoom->isSold(),
             'created_at'         => $hotelRoom->created_at->toDateTimeString(),
             'updated_at'         => $hotelRoom->updated_at->toDateTimeString(),
         ];

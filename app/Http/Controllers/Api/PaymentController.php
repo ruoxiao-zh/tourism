@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Attraction;
 use App\Models\Hotel;
 use App\Models\HotelRoom;
+use App\Models\HotelRoomReservationInfo;
 use App\Models\HotelRoomType;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -84,6 +85,13 @@ class PaymentController extends Controller
                         $hotel = Hotel::where('id', $hotel_room->hotel_id)->first();
                         $hotel_room_type = HotelRoomType::where('id', $hotel_room->hotel_room_type_id)->first();
                         $goods_list[] = $hotel->name . $hotel_room_type->type . '房间';
+                        // 酒店房间预订信息写入到酒店预订信息数据库
+                        foreach ($item->date as $k => $v) {
+                            HotelRoomReservationInfo::create([
+                                'hotel_room_id' => $hotel_room->id,
+                                'date'          => $v['date'],
+                            ]);
+                        }
 
                         break;
                 }

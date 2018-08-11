@@ -36,4 +36,9 @@ class HotelRoom extends Model
     {
         return $this->hasMany(HotelRoomImage::class, 'hotel_room_id', 'id');
     }
+
+    public function isSold()
+    {
+        return HotelRoomReservationInfo::where('hotel_room_id', $this->id)->where('date', '>', strtotime(time() - 3600 * 24))->select('id', 'hotel_room_id', 'date')->get();
+    }
 }
