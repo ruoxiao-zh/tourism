@@ -197,7 +197,7 @@ class OrdersController extends Controller
     {
         // 核销码
         $code = $request->input('code');
-        if ($order->order_status != 1) {
+        if ($order->order_status != 2) {
             throw new \Dingo\Api\Exception\StoreResourceFailedException('该订单状态不符合核销要求, 无法核销');
         }
 
