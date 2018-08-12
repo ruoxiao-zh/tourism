@@ -21,7 +21,7 @@ class CartTransformer extends TransformerAbstract
                     'product_name'        => $cart->travelProduct->name,
                     'product_price'       => (float)$cart->travelProduct->price,
                     'product_image'       => $cart->travelProductImage()->image,
-                    'product_total_money' => (float)($cart->amount * $cart->travelProduct->price),
+                    'product_total_money' => (float)$cart->product_total_money,
                     'date'                => json_decode($cart->date, true),
                     'created_at'          => $cart->created_at->toDateTimeString(),
                     'updated_at'          => $cart->updated_at->toDateTimeString(),
