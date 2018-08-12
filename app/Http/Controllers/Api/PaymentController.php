@@ -40,7 +40,7 @@ class PaymentController extends Controller
             throw new \Dingo\Api\Exception\StoreResourceFailedException('订单状态不正确');
         }
         // 支付金额
-        $total_amount = $order->total_amount * 100;
+        $total_amount = (int)($order->total_amount * 100);
         // 判断当前用户的会员资格, 如果满足发生价格优惠
         $user = User::find($this->user()->id);
         $members = Member::orderBy('monetary', 'desc')->get();
@@ -48,7 +48,7 @@ class PaymentController extends Controller
             if ($user->monetary >= $value->monetary) {
                 // 会员资格
                 if (!$value->is_forbid) {
-                    $total_amount = $total_amount * $value->discount / 10;
+                    $total_amount = (int)ceil($total_amount * $value->discount / 10);
                 }
             }
         }
