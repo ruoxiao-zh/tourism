@@ -20,7 +20,7 @@ class CheckCoderRequest extends BaseRequest
                     'code'  => 'required|string|max:32|unique:check_coders',
                     'type'  => [
                         'required',
-                        Rule::in(['hotel', 'ticket']),
+                        Rule::in(['hotel', 'ticket', 'travel']),
                     ]
                 ];
                 break;
@@ -34,7 +34,7 @@ class CheckCoderRequest extends BaseRequest
                     'code'  => 'required|string|max:32',
                     'type'  => [
                         'required',
-                        Rule::in(['hotel', 'ticket']),
+                        Rule::in(['hotel', 'ticket', 'travel']),
                     ]
                 ];
                 break;
@@ -64,7 +64,7 @@ class CheckCoderRequest extends BaseRequest
             'code.max'       => '核销员专属核销码最大字符长度不能超过 32 个字符',
             'code.unique'    => '核销员专属核销码已经存在',
             'type.required'  => '核销员类型不能为空',
-            'type.in'        => '核销员类型类型只能是 [hotel, ticket] 数组中的任一值',
+            'type.in'        => '核销员类型类型只能是 [hotel, ticket, travel] 数组中的任一值',
         ];
     }
 }
