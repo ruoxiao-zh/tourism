@@ -39,7 +39,7 @@ class CheckCodersController extends Controller
         return $this->response->noContent();
     }
 
-    public function index(CheckCoderRequest $request, CheckCoder $checkCoder)
+    public function index(Request $request, CheckCoder $checkCoder)
     {
         $query = $checkCoder->query();
         $checkCoders = $query->where('type', $request->type)->paginate(15);
