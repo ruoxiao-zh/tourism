@@ -552,13 +552,13 @@ $api->version('v1', [
             $api->post('pay', 'PaymentController@payByWechat')
                 ->name('api.pay.store');
         });
-        // 详情
+        // 订单详情
         $api->get('orders/{order}', 'OrdersController@show')
             ->name('api.orders.show');
-        // 删除
+        // 订单删除
         $api->delete('orders/{order}', 'OrdersController@destroy')
             ->name('api.orders.destroy');
-        // 列表 - 后台
+        // 订单列表 - 后台
         $api->get('orders', 'OrdersController@index')
             ->name('api.orders.index');
         // 订单发货
