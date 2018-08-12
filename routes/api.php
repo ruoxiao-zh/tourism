@@ -535,18 +535,9 @@ $api->version('v1', [
             // 更新
             $api->patch('orders/{order}', 'OrdersController@update')
                 ->name('api.orders.update');
-            // 删除
-            $api->delete('orders/{order}', 'OrdersController@destroy')
-                ->name('api.orders.destroy');
-            // 列表 - 后台
-            $api->get('orders', 'OrdersController@index')
-                ->name('api.orders.index');
             // 列表 - 前台
             $api->get('mine-orders', 'OrdersController@mineIndex')
                 ->name('api.mine-orders.index');
-            // 详情
-            $api->get('orders/{order}', 'OrdersController@show')
-                ->name('api.orders.show');
             // 申请退款
             $api->post('orders-refund', 'OrdersController@applyRefund')
                 ->name('api.orders.refund');
@@ -561,6 +552,15 @@ $api->version('v1', [
             $api->post('pay', 'PaymentController@payByWechat')
                 ->name('api.pay.store');
         });
+        // 详情
+        $api->get('orders/{order}', 'OrdersController@show')
+            ->name('api.orders.show');
+        // 删除
+        $api->delete('orders/{order}', 'OrdersController@destroy')
+            ->name('api.orders.destroy');
+        // 列表 - 后台
+        $api->get('orders', 'OrdersController@index')
+            ->name('api.orders.index');
         // 订单发货
         $api->post('orders-deliver', 'PaymentController@goodsDeliver')
             ->name('api.orders.delivery');
