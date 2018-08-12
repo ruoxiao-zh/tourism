@@ -101,11 +101,14 @@ class PaymentController extends Controller
                         $hotel_room_type = HotelRoomType::where('id', $hotel_room->hotel_room_type_id)->first();
                         $goods_list[] = $hotel->name . $hotel_room_type->type . '房间';
                         // 酒店房间预订信息写入到酒店预订信息数据库
-                        foreach ($item->date as $k => $v) {
-                            HotelRoomReservationInfo::create([
-                                'hotel_room_id' => $hotel_room->id,
-                                'date'          => $v['date'],
-                            ]);
+                        if ($item->date) {
+                            $item->date = json_decode($item->date, true);
+                            foreach ($item->date as $k => $v) {
+                                HotelRoomReservationInfo::create([
+                                    'hotel_room_id' => $hotel_room->id,
+                                    'date'          => $v['date'],
+                                ]);
+                            }
                         }
 
                         break;
