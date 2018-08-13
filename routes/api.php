@@ -474,6 +474,19 @@ $api->version('v1', [
             ->name('api.weapp.authorizations.me');
 
         /**
+         * 权限管理
+         */
+        // 添加
+        $api->post('user-permission', 'UserPermissionController@store')
+            ->name('api.user-permission.store');
+        // 删除
+        $api->delete('user-permission/{userPermission}', 'UserPermissionController@destroy')
+            ->name('api.user-permission.destroy');
+        // 单一管理员的权限列表
+        $api->get('user/permission', 'UserPermissionController@userPermission')
+            ->name('api.user-permission.permission');
+
+        /**
          * 用户相关
          */
         // 图片验证码
@@ -488,6 +501,10 @@ $api->version('v1', [
         // 删除token
         $api->delete('authorizations/current', 'AuthorizationsController@destroy')
             ->name('api.authorizations.destroy');
+
+        // 用户列表
+        $api->get('users', 'UsersController@all')
+            ->name('api.user.all');
 
         // 需要 token 验证的接口
         $api->group(['middleware' => 'api.auth'], function ($api) {

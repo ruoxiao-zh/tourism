@@ -75,4 +75,12 @@ class UsersController extends Controller
 
         return $this->response->item($this->user(), new UserTransformer());
     }
+
+    public function all(User $user)
+    {
+        $query = $user->query();
+        $users = $query->where('is_admin', 1)->orderBy('created_at', 'desc')->paginate(15);
+
+        return $this->response->paginator($users, new UserTransformer());
+    }
 }
