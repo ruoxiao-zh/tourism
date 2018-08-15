@@ -14,7 +14,6 @@ class WalkRequest extends BaseRequest
                     'walk_category_id' => 'required|numeric',
                     'images'           => 'required|json',
                     'introduce'        => 'required|string',
-                    'data'             => 'required|json',
                 ];
                 break;
             case 'PATCH':
@@ -24,7 +23,6 @@ class WalkRequest extends BaseRequest
                     'walk_category_id' => 'required|numeric',
                     'images'           => 'required|json',
                     'introduce'        => 'required|string',
-                    'data'             => 'required|json',
                 ];
                 break;
         }
@@ -46,8 +44,8 @@ class WalkRequest extends BaseRequest
             'images.json'               => '徒步线路详情图片必须为 json 类型',
             'introduce.required'        => '徒步线路简介不能为空',
             'introduce.string'          => '徒步线路简介必须为字符串类型',
-            'data.required'             => '徒步线路日期安排不能为空',
-            'data.json'                 => '徒步线路日期安排必须为 json 类型',
+//            'data.required'             => '徒步线路日期安排不能为空',
+//            'data.json'                 => '徒步线路日期安排必须为 json 类型',
         ];
     }
 }

@@ -22,7 +22,6 @@ class WalkController extends Controller
                 'walk_id'    => $walkLine->id,
                 'images'     => $request->images,
                 'introduce'  => $request->introduce,
-                'data'       => $request->data,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
@@ -42,7 +41,6 @@ class WalkController extends Controller
                 'walk_id'    => $walkLine->id,
                 'images'     => $request->images,
                 'introduce'  => $request->introduce,
-                'data'       => $request->data,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
