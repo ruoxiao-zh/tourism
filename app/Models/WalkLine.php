@@ -24,7 +24,6 @@ class WalkLine extends Model
         $walk_detail = WalkLineDetail::where('walk_id', $this->id)->first();
         if ($walk_detail) {
             $walk_detail->images = json_decode($walk_detail->images, true);
-            $walk_detail->data = json_decode($walk_detail->data, true);
         }
 
         return $walk_detail;
