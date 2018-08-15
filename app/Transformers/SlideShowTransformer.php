@@ -12,6 +12,7 @@ class SlideShowTransformer extends TransformerAbstract
         return [
             'id'         => $slideShow->id,
             'image'      => $slideShow->image,
+            'url'        => $slideShow->url,
             'created_at' => $slideShow->created_at->toDateTimeString(),
             'updated_at' => $slideShow->updated_at->toDateTimeString(),
         ];

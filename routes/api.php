@@ -464,6 +464,25 @@ $api->version('v1', [
             ->name('api.slide-shows.show');
 
         /**
+         * 板块管理
+         */
+        // 添加
+        $api->post('plate', 'PlateController@store')
+            ->name('api.plate.store');
+        // 更新
+        $api->patch('plate/{plate}', 'PlateController@update')
+            ->name('api.plate.update');
+        // 删除
+        $api->delete('plate/{plate}', 'PlateController@destroy')
+            ->name('api.plate.destroy');
+        // 列表
+        $api->get('plate', 'PlateController@index')
+            ->name('api.plate.index');
+        // 详情
+        $api->get('plate/{plate}', 'PlateController@show')
+            ->name('api.plate.show');
+
+        /**
          * 微信相关
          */
         // 小程序登录 - 获取 openid
