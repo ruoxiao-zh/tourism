@@ -8,5 +8,5 @@ class SlideShow extends Model
 {
     protected $table = 'slideshows';
 
-    protected $fillable = ['image'];
+    protected $fillable = ['image', 'url'];
 }
