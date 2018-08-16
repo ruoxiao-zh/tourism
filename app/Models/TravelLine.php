@@ -12,6 +12,7 @@ class TravelLine extends Model
         'date',
         'name',
         'price',
+        'data',
         'cate_id',
         'status',
         'is_delete',
