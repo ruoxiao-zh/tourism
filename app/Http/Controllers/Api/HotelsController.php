@@ -85,7 +85,7 @@ class HotelsController extends Controller
 
     public function categoryHotels(Request $request, HotelCategory $hotelCategory)
     {
-        $hotels = $hotelCategory->hotels()->paginate(15);
+        $hotels = $hotelCategory->hotels()->where('is_delete', 0)->paginate(15);
 
         return $this->response->paginator($hotels, new HotelTransformer());
     }
