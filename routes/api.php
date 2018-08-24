@@ -88,6 +88,9 @@ $api->version('v1', [
         // 推荐首页与取消推荐首页
         $api->get('articles/change-index/{article}', 'ArticlesController@changeIndex')
             ->name('api.articles.change.index');
+        // 获取推荐首页的文章列表
+        $api->get('articles/index', 'ArticlesController@articleIndex')
+            ->name('api.articles.index');
 
         /**
          * 客服管理

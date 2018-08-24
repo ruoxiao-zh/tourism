@@ -27,8 +27,6 @@ class ArticlesController extends Controller
 
     public function update(ArticleRequest $request, Article $article)
     {
-        // todo...
-        // $this->authorize('update', $topic);
         $article->update($request->all());
 
         return $this->response->item($article, new ArticleTransformer());
@@ -36,10 +34,8 @@ class ArticlesController extends Controller
 
     public function destroy(Article $article)
     {
-        // todo...
-        // $this->authorize('update', $topic);
-
         $article->delete();
+
         return $this->response->noContent();
     }
 
@@ -51,7 +47,7 @@ class ArticlesController extends Controller
         if ($request->title) {
             array_push($search_array, ['title', 'like', '%' . $request->title . '%']);
         }
-        $article = $query->where('type', $request->type)->where($search_array)->orderBy('is_index', 'desc')->orderBy('is_top', 'desc')->paginate(15);
+        $article = $query->where('type', $request->type)->where($search_array)->orderBy('is_index', 'desc')->orderBy('is_top', 'desc')->orderBy('created_at', 'desc')->paginate(15);
 
         return $this->response->paginator($article, new ArticleTransformer());
     }
@@ -90,5 +86,14 @@ class ArticlesController extends Controller
         $article->save();
 
         return $this->response->item($article, new ArticleTransformer());
+    }
+
+    public function articleIndex(Article $article)
+    {
+        $query = $article->query();
+
+        $article = $query->where('is_index', 1)->orderBy('is_top', 'desc')->orderBy('created_at', 'desc')->paginate(15);
+
+        return $this->response->paginator($article, new ArticleTransformer());
     }
 }
