@@ -89,7 +89,7 @@ $api->version('v1', [
         $api->get('articles/change-index/{article}', 'ArticlesController@changeIndex')
             ->name('api.articles.change.index');
         // 获取推荐首页的文章列表
-        $api->get('articles/index', 'ArticlesController@articleIndex')
+        $api->get('articles-index', 'ArticlesController@articleIndex')
             ->name('api.articles.index');
 
         /**
