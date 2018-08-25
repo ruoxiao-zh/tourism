@@ -12,7 +12,7 @@ class WalkRequest extends BaseRequest
                     'name'             => 'required|string|max:255|unique:walk_lines',
                     'image'            => 'required|string|max:255',
                     'walk_category_id' => 'required|numeric',
-                    'images'           => 'required|json',
+//                    'images'           => 'required|json',
                     'introduce'        => 'required|string',
                 ];
                 break;
@@ -21,7 +21,7 @@ class WalkRequest extends BaseRequest
                     'name'             => 'required|string|max:255',
                     'image'            => 'required|string|max:255',
                     'walk_category_id' => 'required|numeric',
-                    'images'           => 'required|json',
+//                    'images'           => 'required|json',
                     'introduce'        => 'required|string',
                 ];
                 break;
