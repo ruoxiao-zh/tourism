@@ -41,7 +41,7 @@ class WalkRequest extends BaseRequest
             'walk_category_id.required' => '徒步线路分类 ID 不能为空',
             'walk_category_id.numeric'  => '徒步线路分类 ID 必须为字符串类型',
             'images.required'           => '徒步线路详情图片不能为空',
-            'images.json'               => '徒步线路详情图片必须为 json 类型',
+//            'images.json'               => '徒步线路详情图片必须为 json 类型',
             'introduce.required'        => '徒步线路简介不能为空',
             'introduce.string'          => '徒步线路简介必须为字符串类型',
 //            'data.required'             => '徒步线路日期安排不能为空',

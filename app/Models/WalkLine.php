@@ -22,7 +22,7 @@ class WalkLine extends Model
     public function detail()
     {
         $walk_detail = WalkLineDetail::where('walk_id', $this->id)->first();
-        if ($walk_detail) {
+        if ($walk_detail && !empty($walk_detail->images)) {
             $walk_detail->images = json_decode($walk_detail->images, true);
         }
 
