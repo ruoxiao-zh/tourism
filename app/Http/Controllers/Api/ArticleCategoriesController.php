@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\ArticleCategoryRequest;
 use App\Models\ArticleCategory;
+use App\Models\Article;
 use App\Transformers\ArticleCategoryTransformer;
 use Illuminate\Http\Request;
 
@@ -33,10 +34,13 @@ class ArticleCategoriesController extends Controller
         return $this->response->item($articleCategory, new ArticleCategoryTransformer());
     }
 
-    public function destroy(ArticleCategory $articleCategory)
+    public function destroy(ArticleCategory $articleCategory, Request $request)
     {
         // todo...
         // $this->authorize('update', $topic);
+	if (Article::where('cate_id', $request->id)->get()) {
+	    throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该分类下边的文章, 再删除该分类');
+	}
 
         $articleCategory->delete();
 

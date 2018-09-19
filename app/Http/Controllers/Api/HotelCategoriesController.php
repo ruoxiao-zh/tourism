@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\HotelCategoryRequest;
 use App\Models\HotelCategory;
+use App\Models\Hotel;
 use App\Transformers\HotelCategoryTransformer;
 use Illuminate\Http\Request;
 
@@ -33,10 +34,13 @@ class HotelCategoriesController extends Controller
         return $this->response->item($hotelCategory, new HotelCategoryTransformer());
     }
 
-    public function destroy(HotelCategory $hotelCategory)
+    public function destroy(HotelCategory $hotelCategory, Request $request)
     {
         // todo...
         // $this->authorize('update', $topic);
+	if (Hotel::where('cate_id', $request->id)->get()) {
+	    throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该酒店分类下的酒店, 再执行操作');
+	}
 
         $hotelCategory->delete();
 

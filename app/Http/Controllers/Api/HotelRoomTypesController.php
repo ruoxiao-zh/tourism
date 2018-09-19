@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\HotelRoomTypeRequest;
 use App\Models\HotelRoomType;
+use App\Models\HotelRoom;
 use App\Transformers\HotelRoomTypeTransformer;
 use Illuminate\Http\Request;
 
@@ -33,10 +34,13 @@ class HotelRoomTypesController extends Controller
         return $this->response->item($hotelRoomType, new HotelRoomTypeTransformer());
     }
 
-    public function destroy(HotelRoomType $hotelRoomType)
+    public function destroy(HotelRoomType $hotelRoomType, Request $request)
     {
         // todo...
         // $this->authorize('update', $topic);
+	if (HotelRoom::where('hotel_room_type_id', $request->id)->get()) {
+	    throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该房间类型下边的房间, 再执行操作');
+	}
 
         $hotelRoomType->delete();
 

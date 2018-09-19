@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\TravelCategoryRequest;
 use App\Models\TravelCategory;
+use App\Models\TravelLine;
 use App\Transformers\TravelCategoryTransformer;
 use Illuminate\Http\Request;
 
@@ -33,10 +34,13 @@ class TravelCategoriesController extends Controller
         return $this->response->item($travelCategory, new TravelCategoryTransformer());
     }
 
-    public function destroy(TravelCategory $travelCategory)
+    public function destroy(TravelCategory $travelCategory, Request $request)
     {
         // todo...
         // $this->authorize('update', $topic);
+	if (TravelLine::where('cate_id', $request->id)->get()) {
+	    throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该旅游分类下的旅行线路, 在执行删除');
+	}
 
         $travelCategory->delete();
 

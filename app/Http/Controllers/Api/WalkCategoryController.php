@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\WalkCategoryRequest;
 use App\Models\WalkCategory;
+use App\Models\WalkLine;
 use App\Transformers\WalkCategoryTransformer;
 use Illuminate\Http\Request;
 
@@ -27,10 +28,13 @@ class WalkCategoryController extends Controller
         return $this->response->item($walkCategory, new WalkCategoryTransformer());
     }
 
-    public function destroy(WalkCategory $walkCategory)
+    public function destroy(WalkCategory $walkCategory, Request $request)
     {
         // todo...
         // $this->authorize('update', $topic);
+	if (WalkLine::where('walk_category_id', $request->id)->get()) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该徒步线路分类下的线路, 再执行操作');
+	}
 
         $walkCategory->delete();
 
