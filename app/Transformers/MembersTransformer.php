@@ -13,7 +13,7 @@ class MembersTransformer extends TransformerAbstract
             'id'         => $member->id,
             'monetary'   => $member->monetary,
             'title_id'   => (int)$member->title_id,
-            'title'      => $member->title->name,
+            'title'      => $member->title ? $member->title->name : '',
             'discount'   => (int)$member->discount,
             'is_forbid'  => (boolean)$member->is_forbid,
             'created_at' => $member->created_at->toDateTimeString(),

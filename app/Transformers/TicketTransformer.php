@@ -12,9 +12,9 @@ class TicketTransformer extends TransformerAbstract
         return [
             'id'             => $ticket->id,
             'attraction_id'  => (int)$ticket->attraction_id,
-            'attraction'     => $ticket->attraction->name,
+            'attraction'     => $ticket->attraction ? $ticket->attraction->name : '',
             'ticket_type_id' => (int)$ticket->ticket_type_id,
-            'ticket_type'    => $ticket->ticketType->name,
+            'ticket_type'    => $ticket->ticketType ? $ticket->ticketType->name : '',
             'stock'          => (int)$ticket->stock,
             'price'          => $ticket->price,
             'needs_to_know'  => $ticket->needs_to_know,

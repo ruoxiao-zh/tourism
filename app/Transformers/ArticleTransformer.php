@@ -13,7 +13,7 @@ class ArticleTransformer extends TransformerAbstract
             'id'         => $article->id,
             'type'       => $article->type,
             'cate_id'    => $article->cate_id,
-            'category'   => $article->category->name,
+            'category'   => $article->category ? $article->category->name : '',
             'title'      => $article->title,
             'image'      => $article->image,
             'content'    => $article->content,

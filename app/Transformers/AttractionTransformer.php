@@ -22,7 +22,7 @@ class AttractionTransformer extends TransformerAbstract
             'date'                 => json_decode($attraction->date, true),
             'introduce'            => $attraction->introduce,
             'take_tickets_type_id' => (int)$attraction->take_tickets_type_id,
-            'take_tickets_type'    => $attraction->takeTicketsType->name,
+            'take_tickets_type'    => $attraction->takeTicketsType ? $attraction->takeTicketsType->name : '',
             'tickets'              => $attraction->tickets(),
             'created_at'           => $attraction->created_at->toDateTimeString(),
             'updated_at'           => $attraction->updated_at->toDateTimeString(),

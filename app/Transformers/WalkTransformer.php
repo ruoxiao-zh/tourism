@@ -14,7 +14,7 @@ class WalkTransformer extends TransformerAbstract
             'name'             => $walkLine->name,
             'image'            => $walkLine->image,
             'walk_category_id' => (int)$walkLine->walk_category_id,
-            'walk_category'    => $walkLine->category->name,
+            'walk_category'    => $walkLine->category ? $walkLine->category->name : '',
             'is_index'         => (boolean)$walkLine->is_index,
             'walk_detail'      => $walkLine->detail(),
             'created_at'       => $walkLine->created_at->toDateTimeString(),

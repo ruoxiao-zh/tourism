@@ -22,7 +22,7 @@ class HotelTransformer extends TransformerAbstract
             'contact'    => $hotel->contact,
             'introduce'  => $hotel->introduce,
             'cate_id'    => $hotel->cate_id,
-            'category'   => $hotel->category->name,
+            'category'   => $hotel->category ? $hotel->category->name : '',
             'is_index'   => (boolean)$hotel->is_index,
             'min_price'  => $hotel->getMinPrice(),
             'services'   => $hotel->services,
