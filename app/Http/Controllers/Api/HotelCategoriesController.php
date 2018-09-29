@@ -27,20 +27,17 @@ class HotelCategoriesController extends Controller
 
     public function update(HotelCategoryRequest $request, HotelCategory $hotelCategory)
     {
-        // todo...
-        // $this->authorize('update', $topic);
         $hotelCategory->update($request->all());
 
         return $this->response->item($hotelCategory, new HotelCategoryTransformer());
     }
 
-    public function destroy(HotelCategory $hotelCategory, Request $request)
+    public function destroy(HotelCategory $hotelCategory)
     {
-        // todo...
-        // $this->authorize('update', $topic);
-	if (Hotel::where('cate_id', $request->id)->get()) {
-	    throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该酒店分类下的酒店, 再执行操作');
-	}
+        $result = Hotel::where('cate_id', $hotelCategory->id)->get();
+        if (!$result->isEmpty()) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该酒店分类下的酒店, 再执行操作');
+        }
 
         $hotelCategory->delete();
 

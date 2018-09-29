@@ -34,13 +34,12 @@ class HotelRoomTypesController extends Controller
         return $this->response->item($hotelRoomType, new HotelRoomTypeTransformer());
     }
 
-    public function destroy(HotelRoomType $hotelRoomType, Request $request)
+    public function destroy(HotelRoomType $hotelRoomType)
     {
-        // todo...
-        // $this->authorize('update', $topic);
-	if (HotelRoom::where('hotel_room_type_id', $request->id)->get()) {
-	    throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该房间类型下边的房间, 再执行操作');
-	}
+        $result = HotelRoom::where('hotel_room_type_id', $hotelRoomType->id)->get();
+        if (!$result->isEmpty()) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该房间类型下边的房间, 再执行操作');
+        }
 
         $hotelRoomType->delete();
 

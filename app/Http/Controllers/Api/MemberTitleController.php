@@ -36,8 +36,10 @@ class MemberTitleController extends Controller
 
     public function destroy(MemberTitle $memberTitle)
     {
-        // todo...
-        // $this->authorize('update', $topic);
+        $result = MemberTitle::where('title_id', $memberTitle->id)->get();
+        if (!$result->isEmpty()) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该会员头衔下的会员, 再执行操作');
+        }
 
         $memberTitle->delete();
 

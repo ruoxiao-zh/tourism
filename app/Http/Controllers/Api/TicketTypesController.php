@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\TicketTypeRequest;
+use App\Models\Ticket;
 use App\Models\TicketType;
 use App\Transformers\TicketTypeTransformer;
 use Illuminate\Http\Request;
@@ -26,8 +27,6 @@ class TicketTypesController extends Controller
 
     public function update(TicketTypeRequest $request, TicketType $ticketType)
     {
-        // todo...
-        // $this->authorize('update', $topic);
         $ticketType->update($request->all());
 
         return $this->response->item($ticketType, new TicketTypeTransformer());
@@ -35,8 +34,10 @@ class TicketTypesController extends Controller
 
     public function destroy(TicketType $ticketType)
     {
-        // todo...
-        // $this->authorize('update', $topic);
+        $result = Ticket::where('ticket_type_id', $ticketType->id)->get();
+        if (!$result->isEmpty()) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该门票类型下边的门票, 再执行操作');
+        }
 
         $ticketType->delete();
 

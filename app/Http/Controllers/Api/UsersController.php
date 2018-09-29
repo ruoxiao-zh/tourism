@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\UserPermission;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Transformers\UserTransformer;
@@ -74,6 +75,18 @@ class UsersController extends Controller
         ]);
 
         return $this->response->item($this->user(), new UserTransformer());
+    }
+
+    public function destroy()
+    {
+        $user = User::find($this->user()->id);
+        $result = UserPermission::where('user_id', $this->user()->id)->get();
+        if (!$result->isEmpty()) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该用户的权限, 再执行删除');
+        }
+        $user->delete();
+
+        return $this->response->noContent();
     }
 
     public function all(User $user)

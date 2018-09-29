@@ -27,20 +27,17 @@ class ArticleCategoriesController extends Controller
 
     public function update(ArticleCategoryRequest $request, ArticleCategory $articleCategory)
     {
-        // todo...
-        // $this->authorize('update', $topic);
         $articleCategory->update($request->all());
-        
+
         return $this->response->item($articleCategory, new ArticleCategoryTransformer());
     }
 
-    public function destroy(ArticleCategory $articleCategory, Request $request)
+    public function destroy(ArticleCategory $articleCategory)
     {
-        // todo...
-        // $this->authorize('update', $topic);
-	if (Article::where('cate_id', $request->id)->get()) {
-	    throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该分类下边的文章, 再删除该分类');
-	}
+        $result = Article::where('cate_id', $articleCategory->id)->get();
+        if (!$result->isEmpty()) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该分类下边的文章, 再删除该分类');
+        }
 
         $articleCategory->delete();
 

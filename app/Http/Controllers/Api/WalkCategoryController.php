@@ -21,20 +21,17 @@ class WalkCategoryController extends Controller
 
     public function update(WalkCategoryRequest $request, WalkCategory $walkCategory)
     {
-        // todo...
-        // $this->authorize('update', $topic);
         $walkCategory->update($request->all());
 
         return $this->response->item($walkCategory, new WalkCategoryTransformer());
     }
 
-    public function destroy(WalkCategory $walkCategory, Request $request)
+    public function destroy(WalkCategory $walkCategory)
     {
-        // todo...
-        // $this->authorize('update', $topic);
-	if (WalkLine::where('walk_category_id', $request->id)->get()) {
+        $result = WalkLine::where('walk_category_id', $walkCategory->id)->get();
+        if (!$result->isEmpty()) {
             throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该徒步线路分类下的线路, 再执行操作');
-	}
+        }
 
         $walkCategory->delete();
 

@@ -539,6 +539,9 @@ $api->version('v1', [
             // 用户信息修改
             $api->put('users', 'UsersController@update')
                 ->name('api.users.update');
+            // 用户删除
+            $api->delete('users', 'UsersController@destroy')
+                ->name('api.users.delete');
             // 用户积分兑换
             $api->get('users/credits-exchange', 'UsersController@creditsExchange')
                 ->name('api.users.credits-exchange');
