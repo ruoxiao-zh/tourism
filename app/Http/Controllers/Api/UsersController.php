@@ -77,10 +77,10 @@ class UsersController extends Controller
         return $this->response->item($this->user(), new UserTransformer());
     }
 
-    public function destroy()
+    public function destroy(Request $request)
     {
-        $user = User::find($this->user()->id);
-        $result = UserPermission::where('user_id', $this->user()->id)->get();
+        $user = User::find($request->id);
+        $result = UserPermission::where('user_id', $request->id)->get();
         if (!$result->isEmpty()) {
             throw new \Dingo\Api\Exception\StoreResourceFailedException('请先删除该用户的权限, 再执行删除');
         }

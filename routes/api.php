@@ -528,6 +528,7 @@ $api->version('v1', [
         $api->get('users', 'UsersController@all')
             ->name('api.user.all');
 
+
         // 需要 token 验证的接口
         $api->group(['middleware' => 'api.auth'], function ($api) {
             // 当前登录用户信息
@@ -540,7 +541,7 @@ $api->version('v1', [
             $api->put('users', 'UsersController@update')
                 ->name('api.users.update');
             // 用户删除
-            $api->delete('users', 'UsersController@destroy')
+            $api->get('users/delete/{id}', 'UsersController@destroy')
                 ->name('api.users.delete');
             // 用户积分兑换
             $api->get('users/credits-exchange', 'UsersController@creditsExchange')
